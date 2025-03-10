@@ -56,27 +56,27 @@ const sampleEnemy = {
     strength: 20,
     agility: 10
   },
-  specialAbilities: ["Ensare", "Root Strike", "Uproot"]
+  specialAbilities: ["Ensare", "Root Strike", "Uproot"],
   name: "Wyvern",
   stats: {
-    life: 80,
+    life: 200,
     mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 20,
-    agility: 10
+    stamina: 150,
+    dexterity: 150,
+    strength: 200,
+    agility: 125
   },
-  specialAbilities: ["Fly", "Acid Breath", "Wind Attack"]
+  specialAbilities: ["Fly", "Acid Breath", "Wind Attack"],
   name: "Goblin Warlord",
   stats: {
-    life: 80,
+    life: 100,
     mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 20,
-    agility: 10
+    stamina: 125,
+    dexterity: 150,
+    strength: 200,
+    agility: 100
   },
-  specialAbilities: ["double SLash", "Fear", "Dynamic Strike"]
+  specialAbilities: ["double SLash", "Fear", "Dynamic Strike"],
   name: "Goblin",
   stats: {
     life: 80,
@@ -86,37 +86,37 @@ const sampleEnemy = {
     strength: 20,
     agility: 10
   },
-  specialAbilities: ["Slash", "Roar", "Quick Strike"]
+  specialAbilities: ["Slash", "Roar", "Quick Strike"],
   name: "Hobgoblin",
   stats: {
-    life: 80,
+    life: 90,
     mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 20,
-    agility: 10
+    stamina: 75,
+    dexterity: 1100,
+    strength: 90,
+    agility: 100
   },
-  specialAbilities: ["Bite", "Poison", "Ambush"]
-  name: "Goblin Shamen"
+  specialAbilities: ["Bite", "Poison", "Ambush"],
+  name: "Goblin Shamen",
   stats: {
-    life: 80,
-    mana: 30,
+    life: 100,
+    mana: 200,
     stamina: 50,
     dexterity: 15,
-    strength: 20,
+    strength: 40,
     agility: 10
   },
-  specialAbilities: ["FireBall", "Ensnare", "Blind"]
+  specialAbilities: ["FireBall", "Ensnare", "Blind"],
   name: "Orc",
   stats: {
-    life: 80,
+    life: 100,
     mana: 30,
     stamina: 50,
     dexterity: 15,
-    strength: 20,
-    agility: 10
+    strength: 140,
+    agility: 75
   },
-  specialAbilities: ["Weapon Smash", "Brute Strength", "Taunt"]
+  specialAbilities: ["Weapon Smash", "Brute Strength", "Taunt"],
   name: "Bandit",
   stats: {
     life: 80,
@@ -126,7 +126,7 @@ const sampleEnemy = {
     strength: 20,
     agility: 10
   },
-  specialAbilities: ["Loot", "Multi-Stirike", "Intimidate"]
+  specialAbilities: ["Loot", "Multi-Stirike", "Intimidate"],
   name: "Thief",
   stats: {
     life: 80,
@@ -136,7 +136,7 @@ const sampleEnemy = {
     strength: 20,
     agility: 10
   },
-  specialAbilities: ["Steal", "Acrobatics", "Stab"]
+  specialAbilities: ["Steal", "Acrobatics", "Stab"],
   name: "Evil Mage",
   stats: {
     life: 80,
@@ -146,7 +146,7 @@ const sampleEnemy = {
     strength: 20,
     agility: 10
   },
-  specialAbilities: ["Dark Flame", "Ice Storm", "Meteor Strike"]
+  specialAbilities: ["Dark Flame", "Ice Storm", "Meteor Strike"],
   name: "Lich",
   stats: {
     life: 80,
@@ -156,7 +156,7 @@ const sampleEnemy = {
     strength: 20,
     agility: 10
   },
-  specialAbilities: ["Raise Dead", "Death Magic", "Heal undead"]
+  specialAbilities: ["Raise Dead", "Death Magic", "Heal undead"],
   name: "Undead",
   stats: {
     life: 80,
@@ -166,7 +166,7 @@ const sampleEnemy = {
     strength: 20,
     agility: 10
   },
-  specialAbilities: ["Bite", "Regenerate", "Slash"]
+  specialAbilities: ["Bite", "Regenerate", "Slash"],
   name: "Vampire",
   stats: {
     life: 80,
