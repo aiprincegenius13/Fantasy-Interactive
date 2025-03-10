@@ -15,17 +15,58 @@ function Customization() {
 
     let baseStats;
     switch(charClass) {
-      case "warrior":
+      case "Warrior":
         baseStats = { life: 150, mana: 50, stamina: 120, dexterity: 10, strength: 20, agility: 10 };
         break;
-      case "mage":
+      case "Mage":
         baseStats = { life: 100, mana: 150, stamina: 80, dexterity: 12, strength: 8, agility: 14 };
         break;
-      case "rogue":
+      case "Rogue":
         baseStats = { life: 120, mana: 80, stamina: 100, dexterity: 18, strength: 12, agility: 20 };
         break;
+        case "Paladin":
+          baseStats = { life: 150, mana: 80, stamina: 100, dexterity: 50, strength: 25, agility: 20 };
+          break;
+          case "Arcane Rogue":
+            baseStats = { life: 120, mana: 100, stamina: 100, dexterity: 100, strength: 15, agility: 50 };
+            break;
+            case "Necromancer":
+              baseStats = { life: 80, mana: 200, stamina: 100, dexterity: 120, strength: 10, agility: 20 };
+              break;
+              case "Druid":
+                baseStats = { life: 120, mana: 125, stamina: 50, dexterity: 10, strength: 10, agility: 10 };
+                break;
+                case "Bard":
+                  baseStats = { life: 100, mana: 150, stamina: 100, dexterity: 20, strength: 15, agility: 15 };
+                  break;
+                  case "Monk":
+                    baseStats = { life: 100, mana: 20, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+                    break;
+                    case "Shaman":
+                      baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+                      break;
+                      case "Warlock":
+                        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+                        break;
+                        case "Cleric":
+                          baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+                          break;
+                            case "Ranger":
+                              baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+                              break;
+                             case "Shapeshifter":
+                              baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+                              break;
+                              case "Beastmaster":
+                                baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+                                break;
+                                case "Berserker":
+                                  baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+                                  break;
+      
+            
       default:
-        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        baseStats = { life: 100, mana: 10, stamina: 10, dexterity: 10, strength: 10, agility: 10 };
     }
     
     const character = {
