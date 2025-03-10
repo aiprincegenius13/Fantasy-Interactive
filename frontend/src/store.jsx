@@ -1,5 +1,4 @@
-import create from 'zustand';
-
+import { create } from 'zustand';
 
 const useStore = create((set, get) => ({
   screen: 'login', // 'login', 'customization', 'game'
