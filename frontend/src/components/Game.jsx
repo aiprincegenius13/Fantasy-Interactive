@@ -3,8 +3,7 @@ import useStore from '../store';
 
 const API_URL = "http://localhost:8081/api";
 
-// Dummy story data structure for demonstration.
-// Expand this array to create a full 10‑hour interactive narrative.
+//Story Structure
 const storyData = [
   {
     id: 0,
@@ -46,8 +45,28 @@ const storyData = [
   }
 ];
 
-// Sample enemy object with three special abilities
+// Enemy Object with SPecial Abilities
 const sampleEnemy = {
+  name: "Living Tree",
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
+  specialAbilities: ["Ensare", "Root Strike", "Uproot"]
+  name: "Wyvern",
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
+  specialAbilities: ["Fly", "Acid Breath", "Wind Attack"]
   name: "Goblin Warlord",
   stats: {
     life: 80,
@@ -57,7 +76,107 @@ const sampleEnemy = {
     strength: 20,
     agility: 10
   },
+  specialAbilities: ["double SLash", "Fear", "Dynamic Strike"]
+  name: "Goblin",
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
   specialAbilities: ["Slash", "Roar", "Quick Strike"]
+  name: "Hobgoblin",
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
+  specialAbilities: ["Bite", "Poison", "Ambush"]
+  name: "Goblin Shamen"
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
+  specialAbilities: ["FireBall", "Ensnare", "Blind"]
+  name: "Orc",
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
+  specialAbilities: ["Weapon Smash", "Brute Strength", "Taunt"]
+  name: "Bandit",
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
+  specialAbilities: ["Loot", "Multi-Stirike", "Intimidate"]
+  name: "Thief",
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
+  specialAbilities: ["Steal", "Acrobatics", "Stab"]
+  name: "Evil Mage",
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
+  specialAbilities: ["Dark Flame", "Ice Storm", "Meteor Strike"]
+  name: "Lich",
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
+  specialAbilities: ["Raise Dead", "Death Magic", "Heal undead"]
+  name: "Undead",
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
+  specialAbilities: ["Bite", "Regenerate", "Slash"]
+  name: "Vampire",
+  stats: {
+    life: 80,
+    mana: 30,
+    stamina: 50,
+    dexterity: 15,
+    strength: 20,
+    agility: 10
+  },
+  specialAbilities: ["Life Drain", "Bite", "Evasion"]
 };
 
 function Game() {
@@ -92,7 +211,7 @@ function Game() {
     const expEarned = Math.round(diffPercent * 100);
     addExperience(expEarned);
     
-    // Check if level up criteria are met (example: every level requires 200 EXP)
+    // Check if level up criteria are met after combat
     if (experience + expEarned >= level * 200) {
       levelUp();
       alert(`Congratulations! You reached level ${level + 1}. Your stats have increased!`);
@@ -105,7 +224,7 @@ function Game() {
   const handleChoice = async (choice) => {
     if (choice.next === "combat") {
       startCombat();
-      // For demo purposes, after combat, return to scene 0.
+      // update story
       await updateStory(0);
     } else {
       await updateStory(choice.next);
