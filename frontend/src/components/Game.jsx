@@ -7,15 +7,15 @@ const API_URL = "http://localhost:8081/api";
 const storyData = [
   {
     id: 0,
-    text: "You awaken in a dark forest. The path diverges. Do you choose the left trail towards the ancient ruins or the right path into the dense woods?",
+    text: "",
     choices: [
-      { text: "Take the left trail", next: 1 },
-      { text: "Take the right path", next: 2 }
+      { text: "", next: 1 },
+      { text: "", next: 2 }
     ]
   },
   {
     id: 1,
-    text: "You approach the ruins. A mysterious enemy appears!",
+    text: "",
     choices: [
       { text: "Fight the enemy", next: "combat" },
       { text: "Run away", next: 3 }
@@ -23,26 +23,153 @@ const storyData = [
   },
   {
     id: 2,
-    text: "You venture into the woods and find a peaceful clearing. A wise sage offers guidance.",
+    text: "",
     choices: [
-      { text: "Listen to the sage", next: 4 },
-      { text: "Ignore and continue", next: 3 }
+      { text: "", next: 4 },
+      { text: "", next: 3 }
     ]
   },
   {
     id: 3,
-    text: "You continue on your journey, facing new challenges and adventures.",
+    text: "",
     choices: [
-      { text: "Continue", next: 0 } // Loop back for demonstration
+      { text: "", next:  } 
     ]
   },
   {
     id: 4,
-    text: "The sage teaches you secrets of the ancient arts. You feel your power increase.",
+    text: "",
     choices: [
-      { text: "Thank the sage and leave", next: 0 }
+      { text: "", next:  }
     ]
-  }
+  },
+  {
+    id: 5,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 6,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 7,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 8,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 9,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 10,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 11,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 12,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },  {
+    id: 13,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 14,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 15,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 16,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 17,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 18,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 19,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
+  {
+    id: 20,
+    text: "",
+    choices: [
+      { text: "", next:  },
+      { text: "", next:  }
+    ]
+  },
 ];
 
 // Enemy Object with SPecial Abilities
