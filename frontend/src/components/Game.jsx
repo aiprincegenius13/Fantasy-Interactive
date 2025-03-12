@@ -1,5 +1,12 @@
 import React from 'react';
 import useStore from '../store';
+// import { Link } from 'react-router-dom';
+// import './Game.css';
+// import { useHistory } from 'react-router-dom';
+// import { useAuth } from '../context/auth';
+// import { useEffect } from 'react';
+// import { useState } from 'react';
+// import { useRef } from 'react';
 
 const API_URL = "http://localhost:8081/api";
 
@@ -7,195 +14,460 @@ const API_URL = "http://localhost:8081/api";
 const storyData = [
   {
     id: 0,
-    text: "You awaken with blurred vision, unable to move. As your vision clears, you realize you are in a dungeon of some sort, chained to a wall. The nearby torches illuminate the darkness, revealing other occupants of the dungeon—some deceased, while those still alive are in states much like your own or even worse.",
+    text: "You awaken in a dark corridor, your head throbbing, as an ominous, rhythmic breathing fills the air. Before you, three portals float in the gloom: a vibrant GREEN portal, a deep BLUE portal, and a fiery RED portal.",
     choices: [
-      { text: "Yell for help!", next: 1 },
-      { text: "Remain silent and try to get free from your restraints", next: 2 },
-      { text: "Examine your surroundings for clues", next: 8}
+      { text: "Enter the GREEN portal", next: 1 },
+      { text: "Enter the BLUE portal", next: 11 },
+      { text: "Enter the RED portal", next: 21 }
     ]
   },
+  // --- GREEN PORTAL CHAIN (Freedom if chosen 10 times) ---
   {
     id: 1,
-    text: "The yelling attracts the guards holding you captive. They burst into the chamber and proceed to beat you with a club. The brutal assault fractures your arms, legs, and stomach, shattering your limbs and breaking many of your ribs. The pain is unbearable—you eventually throw up blood and pass out.",
+    text: "You step into the GREEN portal. The corridor shifts but remains dark; the ominous breathing persists. It feels as though this path might offer escape.",
     choices: [
-      { text: "Wake Up", next: 3 },
-      { text: "Succumb to unconsciousness”", next: 50 },
-      { text: "Will yourself to stay conscious", next: 3 }
+      { text: "Enter the GREEN portal again", next: 2 },
+      { text: "Switch to the BLUE portal", next: 11 },
+      { text: "Switch to the RED portal", next: 21 }
     ]
   },
   {
     id: 2,
-    text: "You realize the restraints are loose. With careful effort, you pull your hands free, though you end up breaking both of your thumbs. While your legs are more difficult to release, you manage to free yourself completely.",
+    text: "Once more, you choose the GREEN portal. The corridor repeats its eerie pattern. You sense hope in the green glow.",
     choices: [
-      { text: "Help prisoners", next: 4 },
-      { text: "Run for it", next: 5 },
-      { text: "Hide and wait for an opportunity", next: 9 }
+      { text: "Step into the GREEN portal", next: 3 },
+      { text: "Take the BLUE portal instead", next: 11 },
+      { text: "Take the RED portal instead", next: 21 }
     ]
   },
   {
     id: 3,
-    text: "You slowly regain consciousness as the searing pain and blurred memories fade. The grim reality of the dungeon sinks in: you are battered, but still alive. Determination flickers within you as you consider your next move.",
+    text: "The dark corridor appears again, unchanged except for the growing pull of the GREEN portal. (Green count: 3)",
     choices: [
-      { text: "Assess your injuries and search for a weak spot", next: 10 },
-      { text: "Attempt to free yourself from your chains again", next: 2 },
-      { text: "Call out softly to see if anyone else is awake", next: 11 } 
+      { text: "Enter the GREEN portal", next: 4 },
+      { text: "Try the BLUE portal", next: 11 },
+      { text: "Try the RED portal", next: 21 }
     ]
   },
   {
     id: 4,
-    text: "You look for something to free the prisoners and notice a nearby guard sleeping loudly. Your eyes catch a brick within reach—an opportunity to strike back against your captors.",
+    text: "The green light intensifies in the GREEN portal. The corridor still echoes with that ominous breathing. (Green count: 4)",
     choices: [
-      { text: "Grab brick and assault the guard", next: 6 },
-      { text: "Grab a brick and break another prisoner's shackles", next: 7 },
-      { text: "Quietly search for a hidden key or tool”", next: 12 }
+      { text: "Step into the GREEN portal", next: 5 },
+      { text: "Switch to the BLUE portal", next: 11 },
+      { text: "Switch to the RED portal", next: 21 }
     ]
   },
   {
     id: 5,
-    text: "Determined to secure your freedom, you dash through the dungeon corridors. Your broken thumbs throb with each movement while the sound of pursuing guards grows louder behind you."
-,
+    text: "You proceed through the GREEN portal, feeling that each step brings you closer to freedom. (Green count: 5)",
     choices: [
-      { text: "Turn left into a narrow passage", next: 13 },
-      { text: "Turn right toward distant torchlight”", next: 14 },
-      { text: "Hide in a side alcove to catch your breathd", next: 15 }
+      { text: "Enter the GREEN portal", next: 6 },
+      { text: "Try the BLUE portal", next: 11 },
+      { text: "Try the RED portal", next: 21 }
     ]
   },
   {
     id: 6,
-    text: "Armed with the brick, you charge at the slumbering guard. The attack catches him off guard, and a violent struggle ensues. Prepare for combat!"
-,
+    text: "Again the corridor appears. The GREEN portal glows steadily, urging you onward. (Green count: 6)",
     choices: [
-      { text: "Fight aggressively", next: "combat" },
-      { text: "Aim for a disabling blow", next: "combat" },
-      { text: "Attempt a defensive maneuver and counterattack", next: "combat" }
+      { text: "Step into the GREEN portal", next: 7 },
+      { text: "Switch to the BLUE portal", next: 11 },
+      { text: "Switch to the RED portal", next: 21 }
     ]
   },
   {
     id: 7,
-    text: "Using the brick, you force open the shackles of a fellow prisoner. The freed prisoner nods in gratitude and appears ready to fight by your side",
+    text: "You take another step through the GREEN portal. The familiarity of the dark corridor bolsters your resolve. (Green count: 7)",
     choices: [
-      { text: "Encourage the prisoner to join you in a group escape", next: 18 },
-      { text: "Offer the prisoner some of your rations and plan a coordinated breakout”", next: 19 },
-      { text: "Let the prisoner go ahead while you continue alone", next:  20}
+      { text: "Enter the GREEN portal", next: 8 },
+      { text: "Try the BLUE portal", next: 11 },
+      { text: "Try the RED portal", next: 21 }
     ]
   },
   {
     id: 8,
-    text: "You carefully inspect your surroundings and notice subtle, faded markings on the dungeon wall. The symbols hint at secret passages or hidden keys.",
+    text: "The corridor repeats its form, yet the GREEN portal continues to call you. (Green count: 8)",
     choices: [
-      { text: "Follow the markings along the wall", next: 21 },
-      { text: "Call out to see if anyone else noticed these signs", next: 22 },
-      { text: "Jot down the symbols and plan to decipher them later", next: 23 }
+      { text: "Step into the GREEN portal", next: 9 },
+      { text: "Switch to the BLUE portal", next: 11 },
+      { text: "Switch to the RED portal", next: 21 }
     ]
   },
   {
     id: 9,
-    text: "Deciding that stealth is your ally, you slip into a dark corner and hide as chaos unfolds around you, waiting for the right moment to act.",
+    text: "You have chosen the GREEN portal nine times. The path feels almost liberating. (Green count: 9)",
     choices: [
-      { text: "Peek out to observe the movements of the guards", next: 24 },
-      { text: "Stay hidden and conserve your strength", next: 25 },
-      { text: "Make a quiet dash to a different part of the dungeon”", next: 26 }
+      { text: "Enter the GREEN portal one more time", next: 10 },
+      { text: "Try the BLUE portal", next: 11 },
+      { text: "Try the RED portal", next: 21 }
     ]
   },
   {
     id: 10,
-    text: "In the dim light, you examine your battered body. Despite the pain, you notice weak points in the chains. There might be a way to break free permanently.",
+    text: "As you step through the GREEN portal for the 10th time, the dark corridor dissolves into brilliant light. You have finally emerged from the dungeon into freedom. Congratulations!",
     choices: [
-      { text: "Search for a hidden tool among the rubble", next: 27 },
-      { text: "Focus on the weak chain links and attempt to break them", next: 28 },
-      { text: "Call for assistance from any other prisoners nearby", next: 29 }
+      { text: "Restart the journey", next: 0 },
+      { text: "Exit the game", next: "exit" },
+      { text: "View your final stats", next: 50 }
     ]
   },
+  // --- BLUE PORTAL CHAIN (Combat/Traps/Trials) ---
   {
     id: 11,
-    text: "Your soft plea echoes through the corridor. A faint voice responds from the darkness—a sign that you are not alone in this suffering",
+    text: "You step into the BLUE portal. The corridor turns cold and the breathing becomes distant echoes. Danger lurks ahead.",
     choices: [
-      { text: "Follow the sound of the voice", next: 30 },
-      { text: "Ignore it, suspecting a trap”", next: 31 },
-      { text: "Yell louder to gather more attention", next: 32 }
+      { text: "Proceed cautiously", next: 12 },
+      { text: "Fight the unknown", next: "combat" },
+      { text: "Return to the starting corridor", next: 0 }
     ]
   },
   {
     id: 12,
-    text: "Your cautious search reveals a small, ornate key hidden beneath a loose stone. This key might unlock more than just your chains.",
+    text: "The blue corridor reveals strange, frosty markings on the walls and the sound of clashing weapons in the distance.",
     choices: [
-      { text: "Use the key on your shackles", next: 33 },
-      { text: "Try the key on a nearby prisoner's lock", next: 34 },
-      { text: "Hide the key for future use and continue exploring”", next: 35 }
+      { text: "Follow the sound", next: 13 },
+      { text: "Investigate the markings", next: 14 },
+      { text: "Switch to the GREEN portal", next: 1 }
     ]
-  },  {
+  },
+  {
     id: 13,
-    text: "You dart into a narrow, winding passage. The claustrophobic corridor is lined with damp stone and the distant sound of dripping water hints at lurking dangers",
+    text: "You follow the sound and suddenly encounter a spectral warrior. Prepare for combat!",
     choices: [
-      { text: "Proceed cautiously, listening for traps", next: 36 },
-      { text: "Break into a run, trusting your instincts", next: 37 },
-      { text: "Stop to inspect suspicious markings on the walls", next: 38 }
+      { text: "Engage in combat", next: "combat" },
+      { text: "Attempt to flee", next: 15 },
+      { text: "Try to negotiate", next: 16 }
     ]
   },
   {
     id: 14,
-    text: "You race toward the distant torchlight, hoping it signals an exit. The corridor widens as you approach, yet the flickering flames cast unpredictable shadows",
+    text: "Studying the markings, you decipher an ancient warning: the BLUE portal may lead to doom. Yet the sound beckons.",
     choices: [
-      { text: "Follow the torchlight, staying in the bright areas", next: "combat" },
-      { text: "Venture into the darker gaps between the torches", next: 40 },
-      { text: "Quickly hide in the shadows to avoid detection", next: 41 }
+      { text: "Ignore the warning and proceed", next: 13 },
+      { text: "Retreat back", next: 11 },
+      { text: "Switch to the RED portal", next: 21 }
     ]
   },
   {
     id: 15,
-    text: "You take a moment in a small alcove to catch your breath. Your heart races while distant sounds of pursuit remind you that danger is never far.",
+    text: "You attempt to flee, but the spectral warrior pursues you. You must face the challenge!",
     choices: [
-      { text: "Regain your strength and plan your next move", next: 42 },
-      { text: "Scout the area for other prisoners", next: 43 },
-      { text: "Fashion a makeshift weapon from nearby debris", next: 44 }
+      { text: "Fight desperately", next: "combat" },
+      { text: "Dodge and try to escape", next: 11 },
+      { text: "Surrender", next: 50 }
     ]
   },
   {
     id: 16,
-    text: "With a battle cry, you charge at the Dungeon Guard with your brick raised high.",
+    text: "The warrior’s echoing voice challenges you to prove your worth. You prepare for battle.",
     choices: [
-      { text: "Attack with full force", next: "combat" },
-      { text: "Aim for a disabling blow", next:"combat"  },
-      { text: "Defend and counterattack", next: "combat" }
+      { text: "Accept the challenge", next: "combat" },
+      { text: "Decline and retreat", next: 11 },
+      { text: "Cast a spell against the warrior", next: "combat" }
     ]
   },
   {
     id: 17,
-    text: "You attempt to subdue the guard non-lethally, aiming to knock him out without causing fatal harm.",
+    text: "After the combat, the blue corridor shifts. You sense that more trials lie ahead.",
     choices: [
-      { text: "Use a precise strike to incapacitate him", next: 45 },
-      { text: "Restrain him quickly”", next:45  },
-      { text: "Intimidate him into submission", next: 45 }
+      { text: "Continue down the blue corridor", next: 18 },
+      { text: "Switch to the GREEN portal", next: 1 },
+      { text: "Return to the start", next: 0 }
     ]
   },
   {
     id: 18,
-    text: "The freed prisoner joins your side. Together you now have a better chance against your captors",
+    text: "The blue corridor narrows and the air grows colder. A distant, echoing heartbeat resounds.",
     choices: [
-      { text: "Lead the prisoner to a secret passage", next: 46 },
-      { text: "Search for more allies among the prisoners", next: 47 },
-      { text: "Plan a coordinated attack on a nearby guard station", next: 48 }
+      { text: "Investigate the sound", next: 19 },
+      { text: "Search for a hidden exit", next: 17 },
+      { text: "Return to the corridor entrance", next: 11 }
     ]
   },
   {
     id: 19,
-    text: "Sharing your meager rations and a glimmer of hope, you and the freed prisoner plan a group escape",
+    text: "As the heartbeat intensifies, a monstrous entity emerges from the shadows! Prepare for combat!",
     choices: [
-      { text: "Organize a distraction to lure guards away", next:  49},
-      { text: "“Prepare a stealthy break-out from the cell block” ", next: 46 },
-      { text: " “Gather improvised weapons for an uprising” ", next: 48 }
+      { text: "Fight the beast", next: "combat" },
+      { text: "Attempt to hide", next: 11 },
+      { text: "Flee back", next: 11 }
+    ]
+  },
+  // --- RED PORTAL CHAIN (Traps/Combats/Heat) ---
+  {
+    id: 21,
+    text: "You step into the RED portal. The corridor heats up and a sulfurous odor fills your nostrils. The red light radiates danger.",
+    choices: [
+      { text: "Advance cautiously", next: 22 },
+      { text: "Charge ahead", next: 23 },
+      { text: "Return to the starting corridor", next: 0 }
     ]
   },
   {
-    id: 20,
-    text: "Determined to make it on your own, you slip away into the labyrinthine corridors, resolved to find freedom at any cost",
+    id: 22,
+    text: "The red corridor is fraught with burning debris and scorching walls. The heat is oppressive.",
     choices: [
-      { text: "Follow a dimly lit corridor", next: 36 },
-      { text: "Climb a crumbling wall toward a hidden exit", next: 37 },
-      { text: "Hide in a forgotten storage room and plan your next move", next: 42 }
+      { text: "Search for a cooling refuge", next: 24 },
+      { text: "Press on despite the heat", next: 23 },
+      { text: "Switch to the BLUE portal", next: 11 }
     ]
   },
+  {
+    id: 23,
+    text: "As you charge ahead, you trigger a trap! Flames burst from the walls. Prepare for combat with fiery foes!",
+    choices: [
+      { text: "Fight the flames", next: "combat" },
+      { text: "Dodge through the flames", next: 24 },
+      { text: "Retreat quickly", next: 21 }
+    ]
+  },
+  {
+    id: 24,
+    text: "In the midst of the heat, you find a small alcove with a water basin that briefly cools you.",
+    choices: [
+      { text: "Drink the water", next: 25 },
+      { text: "Rest and recover", next: 25 },
+      { text: "Switch back to the RED portal", next: 21 }
+    ]
+  },
+  {
+    id: 25,
+    text: "Refreshed yet wary, you continue along the red corridor as the oppressive heat lingers.",
+    choices: [
+      { text: "Press on", next: 26 },
+      { text: "Return to the BLUE portal", next: 11 },
+      { text: "Search for an exit", next: 27 }
+    ]
+  },
+  {
+    id: 26,
+    text: "The red corridor twists, revealing gruesome remnants of past victims. A sense of doom weighs on you.",
+    choices: [
+      { text: "Examine the remains", next: 27 },
+      { text: "Hurry past them", next: 27 },
+      { text: "Switch to the GREEN portal", next: 1 }
+    ]
+  },
+  {
+    id: 27,
+    text: "Suddenly, flames erupt from the walls, forcing you into a narrow escape route.",
+    choices: [
+      { text: "Dodge through the explosion", next: "combat" },
+      { text: "Seek cover behind debris", next: 28 },
+      { text: "Scream for help", next: 29 }
+    ]
+  },
+  {
+    id: 28,
+    text: "Taking cover behind fallen stones, you catch your breath while the red corridor remains perilous.",
+    choices: [
+      { text: "Plan your next move", next: 29 },
+      { text: "Switch to a safer portal (BLUE)", next: 11 },
+      { text: "Brace for another attack", next: "combat" }
+    ]
+  },
+  {
+    id: 29,
+    text: "Your cry echoes in the fiery corridor, and for a moment the danger subsides.",
+    choices: [
+      { text: "Return to the main corridor", next: 0 },
+      { text: "Explore further down the RED path", next: 30 },
+      { text: "Switch to the GREEN portal", next: 1 }
+    ]
+  },
+  // --- Additional Nodes to reach at least 50 ---
+  {
+    id: 30,
+    text: "You venture deeper into the RED corridor, where shadows dance menacingly on the walls.",
+    choices: [
+      { text: "Proceed with caution", next: 31 },
+      { text: "Charge into the darkness", next: "combat" },
+      { text: "Return to the previous area", next: 21 }
+    ]
+  },
+  {
+    id: 31,
+    text: "The corridor opens into a chamber filled with ancient inscriptions and relics. Mystery and danger intertwine here.",
+    choices: [
+      { text: "Examine the relics", next: 32 },
+      { text: "Ignore them and move on", next: 30 },
+      { text: "Switch to the BLUE portal", next: 11 }
+    ]
+  },
+  {
+    id: 32,
+    text: "While inspecting the relics, a hidden mechanism triggers a trap: arrows fly from the walls!",
+    choices: [
+      { text: "Dodge the arrows", next: "combat" },
+      { text: "Take cover behind a pillar", next: 33 },
+      { text: "Try to disable the trap", next: 34 }
+    ]
+  },
+  {
+    id: 33,
+    text: "You manage to take cover and avoid the barrage of arrows, shaken by the near miss.",
+    choices: [
+      { text: "Catch your breath and plan", next: 31 },
+      { text: "Advance cautiously", next: 30 },
+      { text: "Switch to the GREEN portal", next: 1 }
+    ]
+  },
+  {
+    id: 34,
+    text: "You skillfully disable the trap and stop further arrows. Your quick thinking saves you.",
+    choices: [
+      { text: "Proceed into the chamber", next: 35 },
+      { text: "Search for hidden treasures", next: 36 },
+      { text: "Retreat back to the corridor", next: 30 }
+    ]
+  },
+  {
+    id: 35,
+    text: "Inside the chamber, you discover a mysterious artifact pulsing with energy. Could it be the key to escape?",
+    choices: [
+      { text: "Take the artifact", next: "combat" },
+      { text: "Leave it alone", next: 36 },
+      { text: "Examine it further", next: 37 }
+    ]
+  },
+  {
+    id: 36,
+    text: "You search the chamber and uncover inscriptions hinting at a secret exit. Hope flickers.",
+    choices: [
+      { text: "Follow the inscriptions", next: 37 },
+      { text: "Memorize the clues for later", next: 38 },
+      { text: "Switch to the BLUE portal", next: 11 }
+    ]
+  },
+  {
+    id: 37,
+    text: "Using the clues, you unlock a hidden door that leads to a narrow passage.",
+    choices: [
+      { text: "Enter the passage", next: 40 },
+      { text: "Examine the door for traps", next: 38 },
+      { text: "Retreat back", next: 36 }
+    ]
+  },
+  {
+    id: 38,
+    text: "You find that the door is rigged with traps—but you manage to disarm them with caution.",
+    choices: [
+      { text: "Enter the door safely", next: 40 },
+      { text: "Retreat and explore another path", next: 30 },
+      { text: "Switch to the GREEN portal", next: 1 }
+    ]
+  },
+  {
+    id: 39,
+    text: "You stumble upon a dead end where the corridor seems to close in on you.",
+    choices: [
+      { text: "Search for hidden levers", next: 41 },
+      { text: "Return to the main corridor", next: 0 },
+      { text: "Take a leap of faith", next: "combat" }
+    ]
+  },
+  {
+    id: 40,
+    text: "Congratulations! Through perseverance you have discovered a secret exit from the dungeon. Freedom is yours.",
+    choices: [
+      { text: "Restart the journey", next: 0 },
+      { text: "Exit the game", next: "exit" },
+      { text: "View your final stats", next: 50 }
+    ]
+  },
+  {
+    id: 41,
+    text: "You find a concealed lever. Pulling it, a hidden passage opens, revealing a new path.",
+    choices: [
+      { text: "Enter the passage", next: 42 },
+      { text: "Return to the corridor", next: 0 },
+      { text: "Switch to the RED portal", next: 21 }
+    ]
+  },
+  {
+    id: 42,
+    text: "The new passage leads deeper into the dungeon; the air grows heavy with anticipation.",
+    choices: [
+      { text: "Proceed cautiously", next: 43 },
+      { text: "Charge ahead", next: "combat" },
+      { text: "Retreat back", next: 41 }
+    ]
+  },
+  {
+    id: 43,
+    text: "In the depths of the passage, you encounter a group of hostile creatures. Prepare for combat!",
+    choices: [
+      { text: "Fight", next: "combat" },
+      { text: "Attempt to hide", next: 42 },
+      { text: "Try to negotiate", next: 44 }
+    ]
+  },
+  {
+    id: 44,
+    text: "Your negotiation fails and the creatures attack!",
+    choices: [
+      { text: "Fight for your life", next: "combat" },
+      { text: "Run away", next: 41 },
+      { text: "Sacrifice an item to appease them", next: 45 }
+    ]
+  },
+  {
+    id: 45,
+    text: "The creatures relent momentarily, giving you a brief window to escape.",
+    choices: [
+      { text: "Seize the opportunity and escape", next: 46 },
+      { text: "Search for useful items", next: 47 },
+      { text: "Rest for a while", next: 48 }
+    ]
+  },
+  {
+    id: 46,
+    text: "You dash through the passage, evading the creatures and emerging into another dark corridor.",
+    choices: [
+      { text: "Explore further", next: 49 },
+      { text: "Return to the main area", next: 0 },
+      { text: "Switch to the GREEN portal", next: 1 }
+    ]
+  },
+  {
+    id: 47,
+    text: "Among the scattered items, you find a healing potion that restores some strength.",
+    choices: [
+      { text: "Drink the potion", next: 48 },
+      { text: "Save it for later", next: 49 },
+      { text: "Share it with an ally", next: 49 }
+    ]
+  },
+  {
+    id: 48,
+    text: "Refreshed and reinvigorated, you press on with newfound determination.",
+    choices: [
+      { text: "Advance cautiously", next: 49 },
+      { text: "Charge ahead", next: "combat" },
+      { text: "Rest a bit longer", next: 47 }
+    ]
+  },
+  {
+    id: 49,
+    text: "You reach a junction in the passage, with paths diverging in multiple directions.",
+    choices: [
+      { text: "Take the left path (GREEN chain)", next: 1 },
+      { text: "Take the middle path (BLUE chain)", next: 11 },
+      { text: "Take the right path (RED chain)", next: 21 }
+    ]
+  },
+  {
+    id: 50,
+    text: "Final Stats and Game Over Summary. Reflect on your journey.",
+    choices: [
+      { text: "Restart the journey", next: 0 },
+      { text: "Exit the game", next: "exit" },
+      { text: "Review your achievements", next: 50 }
+    ]
+  }
 ];
+
 
 // Enemy Object with SPecial Abilities
 const sampleEnemy = {
