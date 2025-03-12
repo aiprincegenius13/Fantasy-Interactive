@@ -128,12 +128,12 @@ function Customization() {
             <option value="fireball">Fireball</option>
             <option value="heal">Heal</option>
             <option value="stealth">Stealth</option>
-            <option value="berserk">Berserk</option>
-             <option value="berserk">Berserk</option>
-             <option value="berserk">Berserk</option>
-             <option value="berserk">Berserk</option>
-             <option value="berserk">Berserk</option>
-             <option value="berserk">Berserk</option>
+            <option value="Brute Strength">Berserk</option>
+             <option value="LEvitation">Berserk</option>
+             <option value="Telekensis">Berserk</option>
+             <option value="Ice SPear">Berserk</option>
+             <option value="Ensare">Berserk</option>
+             <option value="Dark Magic">Berserk</option>
           </select>
         </label>
         <br />
