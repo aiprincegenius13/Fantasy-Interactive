@@ -114,6 +114,11 @@ function Customization() {
             <option value="warrior">Warrior</option>
             <option value="mage">Mage</option>
             <option value="rogue">Rogue</option>
+            <option value="druid">Druid</option>
+            <option value="arcane rogue">Arcane ROgue</option>
+            <option value="paladin">Paladin</option>
+            <option value="berserker">Berserker</option>
+            <option value="archer">Archer</option>
           </select>
         </label>
         <br />
@@ -124,6 +129,11 @@ function Customization() {
             <option value="heal">Heal</option>
             <option value="stealth">Stealth</option>
             <option value="berserk">Berserk</option>
+             <option value="berserk">Berserk</option>
+             <option value="berserk">Berserk</option>
+             <option value="berserk">Berserk</option>
+             <option value="berserk">Berserk</option>
+             <option value="berserk">Berserk</option>
           </select>
         </label>
         <br />
