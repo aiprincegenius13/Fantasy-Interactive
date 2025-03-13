@@ -7,6 +7,9 @@ function Customization() {
   const [alignment, setAlignment] = useState('hero');
   const [charClass, setCharClass] = useState('warrior');
   const [ability, setAbility] = useState('fireball');
+  // New state for combat tendency.
+  const [tendency, setTendency] = useState('Blocking');
+  
   const setCharacter = useStore(state => state.setCharacter);
   const setScreen = useStore(state => state.setScreen);
   
@@ -24,59 +27,59 @@ function Customization() {
       case "Rogue":
         baseStats = { life: 120, mana: 80, stamina: 100, dexterity: 18, strength: 12, agility: 20 };
         break;
-        case "Paladin":
-          baseStats = { life: 150, mana: 80, stamina: 100, dexterity: 50, strength: 25, agility: 20 };
-          break;
-          case "Arcane Rogue":
-            baseStats = { life: 120, mana: 100, stamina: 100, dexterity: 100, strength: 15, agility: 50 };
-            break;
-            case "Necromancer":
-              baseStats = { life: 80, mana: 200, stamina: 100, dexterity: 120, strength: 10, agility: 20 };
-              break;
-              case "Druid":
-                baseStats = { life: 120, mana: 125, stamina: 50, dexterity: 10, strength: 10, agility: 10 };
-                break;
-                case "Bard":
-                  baseStats = { life: 100, mana: 150, stamina: 100, dexterity: 20, strength: 15, agility: 15 };
-                  break;
-                  case "Monk":
-                    baseStats = { life: 100, mana: 20, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-                    break;
-                    case "Shaman":
-                      baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-                      break;
-                      case "Warlock":
-                        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-                        break;
-                        case "Cleric":
-                          baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-                          break;
-                            case "Ranger":
-                              baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-                              break;
-                             case "Shapeshifter":
-                              baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-                              break;
-                              case "Beastmaster":
-                                baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-                                break;
-                                case "Berserker":
-                                  baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-                                  break;
-      
-            
-      default:
-        baseStats = { life: 100, mana: 10, stamina: 10, dexterity: 10, strength: 10, agility: 10 };
+      case "Paladin":
+        baseStats = { life: 150, mana: 80, stamina: 100, dexterity: 50, strength: 25, agility: 20 };
+        break;
+      case "Arcane Rogue":
+        baseStats = { life: 120, mana: 100, stamina: 100, dexterity: 100, strength: 15, agility: 50 };
+        break;
+      case "Necromancer":
+        baseStats = { life: 80, mana: 200, stamina: 100, dexterity: 120, strength: 10, agility: 20 };
+        break;
+      case "Druid":
+        baseStats = { life: 120, mana: 125, stamina: 50, dexterity: 10, strength: 10, agility: 10 };
+        break;
+      case "Bard":
+        baseStats = { life: 100, mana: 150, stamina: 100, dexterity: 20, strength: 15, agility: 15 };
+        break;
+      case "Monk":
+        baseStats = { life: 100, mana: 20, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        break;
+      case "Shaman":
+        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        break;
+      case "Warlock":
+        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        break;
+      case "Cleric":
+        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        break;
+      case "Ranger":
+        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        break;
+      case "Shapeshifter":
+        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        break;
+      case "Beastmaster":
+        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        break;
+      case "Berserker":
+        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        break;
+      // default:
+      //   baseStats = { life: 100, mana: 10, stamina: 10, dexterity: 10, strength: 10, agility: 10 };
     }
     
     const character = {
       alignment,
       class: charClass,
       stats: baseStats,
-      specialAbility: ability
+      specialAbility: ability,
+      // New field: combat tendency.
+      battleTendency: tendency
     };
 
-    // Initialize game state values if needed
+    // Initialize game state values if needed.
     useStore.setState({
       character,
       currentScene: 0,
@@ -85,7 +88,7 @@ function Customization() {
       specialAbilities: [ability]
     });
 
-    // Save the new game state to backend
+    // Save the new game state to backend.
     const stateToSave = useStore.getState();
     await fetch(`${API_URL}/save`, {
       method: "POST",
@@ -115,7 +118,7 @@ function Customization() {
             <option value="mage">Mage</option>
             <option value="rogue">Rogue</option>
             <option value="druid">Druid</option>
-            <option value="arcane rogue">Arcane ROgue</option>
+            <option value="arcane rogue">Arcane Rogue</option>
             <option value="paladin">Paladin</option>
             <option value="berserker">Berserker</option>
             <option value="archer">Archer</option>
@@ -128,12 +131,24 @@ function Customization() {
             <option value="fireball">Fireball</option>
             <option value="heal">Heal</option>
             <option value="stealth">Stealth</option>
-            <option value="Brute Strength">Berserk</option>
-             <option value="LEvitation">Berserk</option>
-             <option value="Telekensis">Berserk</option>
-             <option value="Ice SPear">Berserk</option>
-             <option value="Ensare">Berserk</option>
-             <option value="Dark Magic">Berserk</option>
+            <option value="Brute Strength">Brute Strength</option>
+            <option value="Levitation">Levitation</option>
+            <option value="Telekinesis">Telekinesis</option>
+            <option value="Ice Spear">Ice Spear</option>
+            <option value="Ensare">Ensare</option>
+            <option value="Dark Magic">Dark Magic</option>
+          </select>
+        </label>
+        <br />
+        {/* New Combat Tendency selection */}
+        <label>
+          Choose your combat tendency:
+          <select value={tendency} onChange={e => setTendency(e.target.value)}>
+            <option value="Blocking">Blocking</option>
+            <option value="Attacking">Attacking</option>
+            <option value="Evading">Evading</option>
+            <option value="Trap Avoidance">Trap Avoidance</option>
+            <option value="Critical Damage">Critical Damage</option>
           </select>
         </label>
         <br />
