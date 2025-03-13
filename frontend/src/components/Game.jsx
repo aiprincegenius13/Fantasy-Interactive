@@ -1,465 +1,579 @@
 import React from 'react';
 import useStore from '../store';
-// import { Link } from 'react-router-dom';
-// import './Game.css';
-// import { useHistory } from 'react-router-dom';
-// import { useAuth } from '../context/auth';
-// import { useEffect } from 'react';
-// import { useState } from 'react';
-// import { useRef } from 'react';
 
 const API_URL = "http://localhost:8081/api";
 
-//Story Structure
+// Story Data Array – Each node represents a stage in the story.
+// The GREEN portal branch (nodes 0 → 1 → 2 → ... → 10) leads to freedom.
+// The BLUE and RED branches lead to trials, puzzles, and combat.
+// After freedom (node 10) the story continues in a strange new world.
 const storyData = [
+  // Node 0: Awakening in the dungeon with three portals.
   {
     id: 0,
-    text: "You awaken in a dark corridor, your head throbbing, as an ominous, rhythmic breathing fills the air. Before you, three portals float in the gloom: a vibrant GREEN portal, a deep BLUE portal, and a fiery RED portal.",
+    text: "You awaken in a cold, dim dungeon. All around you, a low, ominous breathing echoes. In front of you hover three portals: a glowing GREEN portal, a mysterious BLUE portal, and a flickering RED portal.",
     choices: [
       { text: "Enter the GREEN portal", next: 1 },
-      { text: "Enter the BLUE portal", next: 11 },
-      { text: "Enter the RED portal", next: 21 }
+      { text: "Enter the BLUE portal", next: 20 },
+      { text: "Enter the RED portal", next: 40 }
     ]
   },
-  // --- GREEN PORTAL CHAIN (Freedom if chosen 10 times) ---
+  // GREEN PORTAL branch – count up to 10 for escape.
   {
     id: 1,
-    text: "You step into the GREEN portal. The corridor shifts but remains dark; the ominous breathing persists. It feels as though this path might offer escape.",
+    text: "You step into the GREEN portal. The environment shifts but the oppressive dungeon remains. (Green count: 1)",
     choices: [
       { text: "Enter the GREEN portal again", next: 2 },
-      { text: "Switch to the BLUE portal", next: 11 },
-      { text: "Switch to the RED portal", next: 21 }
+      { text: "Switch to the BLUE portal", next: 20 },
+      { text: "Switch to the RED portal", next: 40 }
     ]
   },
   {
     id: 2,
-    text: "Once more, you choose the GREEN portal. The corridor repeats its eerie pattern. You sense hope in the green glow.",
+    text: "The corridor repeats itself. The green glow reassures you. (Green count: 2)",
     choices: [
       { text: "Step into the GREEN portal", next: 3 },
-      { text: "Take the BLUE portal instead", next: 11 },
-      { text: "Take the RED portal instead", next: 21 }
+      { text: "Try the BLUE portal", next: 20 },
+      { text: "Try the RED portal", next: 40 }
     ]
   },
   {
     id: 3,
-    text: "The dark corridor appears again, unchanged except for the growing pull of the GREEN portal. (Green count: 3)",
+    text: "A familiar chill runs down your spine as you pass through the GREEN portal. (Green count: 3)",
     choices: [
       { text: "Enter the GREEN portal", next: 4 },
-      { text: "Try the BLUE portal", next: 11 },
-      { text: "Try the RED portal", next: 21 }
+      { text: "Switch to BLUE", next: 20 },
+      { text: "Switch to RED", next: 40 }
     ]
   },
   {
     id: 4,
-    text: "The green light intensifies in the GREEN portal. The corridor still echoes with that ominous breathing. (Green count: 4)",
+    text: "The green light intensifies. The dungeon seems less suffocating. (Green count: 4)",
     choices: [
-      { text: "Step into the GREEN portal", next: 5 },
-      { text: "Switch to the BLUE portal", next: 11 },
-      { text: "Switch to the RED portal", next: 21 }
+      { text: "Enter the GREEN portal", next: 5 },
+      { text: "Try BLUE instead", next: 20 },
+      { text: "Try RED instead", next: 40 }
     ]
   },
   {
     id: 5,
-    text: "You proceed through the GREEN portal, feeling that each step brings you closer to freedom. (Green count: 5)",
+    text: "Each step through the GREEN portal fills you with hope. (Green count: 5)",
     choices: [
       { text: "Enter the GREEN portal", next: 6 },
-      { text: "Try the BLUE portal", next: 11 },
-      { text: "Try the RED portal", next: 21 }
+      { text: "Switch to BLUE", next: 20 },
+      { text: "Switch to RED", next: 40 }
     ]
   },
   {
     id: 6,
-    text: "Again the corridor appears. The GREEN portal glows steadily, urging you onward. (Green count: 6)",
+    text: "The corridor shifts once more. The portal’s green radiance seems almost to pulse. (Green count: 6)",
     choices: [
       { text: "Step into the GREEN portal", next: 7 },
-      { text: "Switch to the BLUE portal", next: 11 },
-      { text: "Switch to the RED portal", next: 21 }
+      { text: "Try BLUE", next: 20 },
+      { text: "Try RED", next: 40 }
     ]
   },
   {
     id: 7,
-    text: "You take another step through the GREEN portal. The familiarity of the dark corridor bolsters your resolve. (Green count: 7)",
+    text: "You feel the promise of escape drawing nearer as you pass through the GREEN portal. (Green count: 7)",
     choices: [
       { text: "Enter the GREEN portal", next: 8 },
-      { text: "Try the BLUE portal", next: 11 },
-      { text: "Try the RED portal", next: 21 }
+      { text: "Switch to BLUE", next: 20 },
+      { text: "Switch to RED", next: 40 }
     ]
   },
   {
     id: 8,
-    text: "The corridor repeats its form, yet the GREEN portal continues to call you. (Green count: 8)",
+    text: "The dungeon corridor recurs, yet the green light grows warmer. (Green count: 8)",
     choices: [
-      { text: "Step into the GREEN portal", next: 9 },
-      { text: "Switch to the BLUE portal", next: 11 },
-      { text: "Switch to the RED portal", next: 21 }
+      { text: "Enter the GREEN portal", next: 9 },
+      { text: "Switch to BLUE", next: 20 },
+      { text: "Switch to RED", next: 40 }
     ]
   },
   {
     id: 9,
-    text: "You have chosen the GREEN portal nine times. The path feels almost liberating. (Green count: 9)",
+    text: "Almost there—each step through the GREEN portal fills you with renewed hope. (Green count: 9)",
     choices: [
-      { text: "Enter the GREEN portal one more time", next: 10 },
-      { text: "Try the BLUE portal", next: 11 },
-      { text: "Try the RED portal", next: 21 }
+      { text: "Step into the GREEN portal for the final time", next: 10 },
+      { text: "Switch to BLUE", next: 20 },
+      { text: "Switch to RED", next: 40 }
     ]
   },
   {
     id: 10,
-    text: "As you step through the GREEN portal for the 10th time, the dark corridor dissolves into brilliant light. You have finally emerged from the dungeon into freedom. Congratulations!",
+    text: "As you step through the GREEN portal for the tenth time, the dungeon melts away. You emerge into a strange new world bathed in soft light. Two moons hang in the sky, and the landscape is breathtaking—a land of alien beauty awaits you.",
     choices: [
-      { text: "Restart the journey", next: 0 },
-      { text: "Exit the game", next: "exit" },
-      { text: "View your final stats", next: 50 }
+      { text: "Explore the new world", next: 11 },
+      { text: "Rest and marvel at the scenery", next: 12 },
+      { text: "Search for local inhabitants", next: 13 }
     ]
   },
-  // --- BLUE PORTAL CHAIN (Combat/Traps/Trials) ---
+  // BLUE PORTAL branch – Trials, puzzles, and combat.
   {
-    id: 11,
-    text: "You step into the BLUE portal. The corridor turns cold and the breathing becomes distant echoes. Danger lurks ahead.",
+    id: 20,
+    text: "You step into the BLUE portal. The air turns cool and misty as you enter a corridor where echoes of distant battle cries resonate.",
     choices: [
-      { text: "Proceed cautiously", next: 12 },
-      { text: "Fight the unknown", next: "combat" },
-      { text: "Return to the starting corridor", next: 0 }
+      { text: "Proceed cautiously", next: 21 },
+      { text: "Charge into the mist", next: 22 },
+      { text: "Return to the dungeon entrance", next: 0 }
     ]
   },
-  {
-    id: 12,
-    text: "The blue corridor reveals strange, frosty markings on the walls and the sound of clashing weapons in the distance.",
-    choices: [
-      { text: "Follow the sound", next: 13 },
-      { text: "Investigate the markings", next: 14 },
-      { text: "Switch to the GREEN portal", next: 1 }
-    ]
-  },
-  {
-    id: 13,
-    text: "You follow the sound and suddenly encounter a spectral warrior. Prepare for combat!",
-    choices: [
-      { text: "Engage in combat", next: "combat" },
-      { text: "Attempt to flee", next: 15 },
-      { text: "Try to negotiate", next: 16 }
-    ]
-  },
-  {
-    id: 14,
-    text: "Studying the markings, you decipher an ancient warning: the BLUE portal may lead to doom. Yet the sound beckons.",
-    choices: [
-      { text: "Ignore the warning and proceed", next: 13 },
-      { text: "Retreat back", next: 11 },
-      { text: "Switch to the RED portal", next: 21 }
-    ]
-  },
-  {
-    id: 15,
-    text: "You attempt to flee, but the spectral warrior pursues you. You must face the challenge!",
-    choices: [
-      { text: "Fight desperately", next: "combat" },
-      { text: "Dodge and try to escape", next: 11 },
-      { text: "Surrender", next: 50 }
-    ]
-  },
-  {
-    id: 16,
-    text: "The warrior’s echoing voice challenges you to prove your worth. You prepare for battle.",
-    choices: [
-      { text: "Accept the challenge", next: "combat" },
-      { text: "Decline and retreat", next: 11 },
-      { text: "Cast a spell against the warrior", next: "combat" }
-    ]
-  },
-  {
-    id: 17,
-    text: "After the combat, the blue corridor shifts. You sense that more trials lie ahead.",
-    choices: [
-      { text: "Continue down the blue corridor", next: 18 },
-      { text: "Switch to the GREEN portal", next: 1 },
-      { text: "Return to the start", next: 0 }
-    ]
-  },
-  {
-    id: 18,
-    text: "The blue corridor narrows and the air grows colder. A distant, echoing heartbeat resounds.",
-    choices: [
-      { text: "Investigate the sound", next: 19 },
-      { text: "Search for a hidden exit", next: 17 },
-      { text: "Return to the corridor entrance", next: 11 }
-    ]
-  },
-  {
-    id: 19,
-    text: "As the heartbeat intensifies, a monstrous entity emerges from the shadows! Prepare for combat!",
-    choices: [
-      { text: "Fight the beast", next: "combat" },
-      { text: "Attempt to hide", next: 11 },
-      { text: "Flee back", next: 11 }
-    ]
-  },
-  // --- RED PORTAL CHAIN (Traps/Combats/Heat) ---
   {
     id: 21,
-    text: "You step into the RED portal. The corridor heats up and a sulfurous odor fills your nostrils. The red light radiates danger.",
+    text: "The blue corridor is alive with shifting shadows. You sense movement along the walls.",
     choices: [
-      { text: "Advance cautiously", next: 22 },
-      { text: "Charge ahead", next: 23 },
-      { text: "Return to the starting corridor", next: 0 }
+      { text: "Investigate the movements", next: 23 },
+      { text: "Hide and observe", next: 24 },
+      { text: "Prepare for combat", next: "combat" }
     ]
   },
   {
     id: 22,
-    text: "The red corridor is fraught with burning debris and scorching walls. The heat is oppressive.",
+    text: "You charge ahead and are suddenly ambushed by a spectral warrior! Prepare for combat!",
     choices: [
-      { text: "Search for a cooling refuge", next: 24 },
-      { text: "Press on despite the heat", next: 23 },
-      { text: "Switch to the BLUE portal", next: 11 }
+      { text: "Fight aggressively", next: "combat" },
+      { text: "Try to flee", next: 21 },
+      { text: "Attempt to negotiate", next: 25 }
     ]
   },
   {
     id: 23,
-    text: "As you charge ahead, you trigger a trap! Flames burst from the walls. Prepare for combat with fiery foes!",
+    text: "Following the movements, you discover an ancient puzzle carved into the cold stone.",
     choices: [
-      { text: "Fight the flames", next: "combat" },
-      { text: "Dodge through the flames", next: 24 },
-      { text: "Retreat quickly", next: 21 }
+      { text: "Attempt to solve the puzzle", next: 25 },
+      { text: "Ignore the puzzle and press forward", next: 26 },
+      { text: "Switch to the RED portal", next: 40 }
     ]
   },
   {
     id: 24,
-    text: "In the midst of the heat, you find a small alcove with a water basin that briefly cools you.",
+    text: "You hide in the shadows, waiting as the corridor’s tension mounts.",
     choices: [
-      { text: "Drink the water", next: 25 },
-      { text: "Rest and recover", next: 25 },
-      { text: "Switch back to the RED portal", next: 21 }
+      { text: "Step out and proceed cautiously", next: 23 },
+      { text: "Switch to the GREEN portal", next: 1 },
+      { text: "Return to the dungeon entrance", next: 0 }
     ]
   },
   {
     id: 25,
-    text: "Refreshed yet wary, you continue along the red corridor as the oppressive heat lingers.",
+    text: "Your attempt at solving the puzzle reveals a hidden passage. But as you enter, a trap is triggered!",
     choices: [
-      { text: "Press on", next: 26 },
-      { text: "Return to the BLUE portal", next: 11 },
-      { text: "Search for an exit", next: 27 }
+      { text: "Dodge the trap (Combat)", next: "combat" },
+      { text: "Try to disable the trap", next: 26 },
+      { text: "Retreat back", next: 21 }
     ]
   },
   {
     id: 26,
-    text: "The red corridor twists, revealing gruesome remnants of past victims. A sense of doom weighs on you.",
+    text: "You forge ahead through the hidden passage, only to encounter a fearsome foe emerging from the mist!",
     choices: [
-      { text: "Examine the remains", next: 27 },
-      { text: "Hurry past them", next: 27 },
-      { text: "Switch to the GREEN portal", next: 1 }
+      { text: "Engage in combat", next: "combat" },
+      { text: "Attempt to hide", next: 21 },
+      { text: "Retreat to the blue corridor", next: 21 }
     ]
   },
-  {
-    id: 27,
-    text: "Suddenly, flames erupt from the walls, forcing you into a narrow escape route.",
-    choices: [
-      { text: "Dodge through the explosion", next: "combat" },
-      { text: "Seek cover behind debris", next: 28 },
-      { text: "Scream for help", next: 29 }
-    ]
-  },
-  {
-    id: 28,
-    text: "Taking cover behind fallen stones, you catch your breath while the red corridor remains perilous.",
-    choices: [
-      { text: "Plan your next move", next: 29 },
-      { text: "Switch to a safer portal (BLUE)", next: 11 },
-      { text: "Brace for another attack", next: "combat" }
-    ]
-  },
-  {
-    id: 29,
-    text: "Your cry echoes in the fiery corridor, and for a moment the danger subsides.",
-    choices: [
-      { text: "Return to the main corridor", next: 0 },
-      { text: "Explore further down the RED path", next: 30 },
-      { text: "Switch to the GREEN portal", next: 1 }
-    ]
-  },
-  // --- Additional Nodes to reach at least 50 ---
-  {
-    id: 30,
-    text: "You venture deeper into the RED corridor, where shadows dance menacingly on the walls.",
-    choices: [
-      { text: "Proceed with caution", next: 31 },
-      { text: "Charge into the darkness", next: "combat" },
-      { text: "Return to the previous area", next: 21 }
-    ]
-  },
-  {
-    id: 31,
-    text: "The corridor opens into a chamber filled with ancient inscriptions and relics. Mystery and danger intertwine here.",
-    choices: [
-      { text: "Examine the relics", next: 32 },
-      { text: "Ignore them and move on", next: 30 },
-      { text: "Switch to the BLUE portal", next: 11 }
-    ]
-  },
-  {
-    id: 32,
-    text: "While inspecting the relics, a hidden mechanism triggers a trap: arrows fly from the walls!",
-    choices: [
-      { text: "Dodge the arrows", next: "combat" },
-      { text: "Take cover behind a pillar", next: 33 },
-      { text: "Try to disable the trap", next: 34 }
-    ]
-  },
-  {
-    id: 33,
-    text: "You manage to take cover and avoid the barrage of arrows, shaken by the near miss.",
-    choices: [
-      { text: "Catch your breath and plan", next: 31 },
-      { text: "Advance cautiously", next: 30 },
-      { text: "Switch to the GREEN portal", next: 1 }
-    ]
-  },
-  {
-    id: 34,
-    text: "You skillfully disable the trap and stop further arrows. Your quick thinking saves you.",
-    choices: [
-      { text: "Proceed into the chamber", next: 35 },
-      { text: "Search for hidden treasures", next: 36 },
-      { text: "Retreat back to the corridor", next: 30 }
-    ]
-  },
-  {
-    id: 35,
-    text: "Inside the chamber, you discover a mysterious artifact pulsing with energy. Could it be the key to escape?",
-    choices: [
-      { text: "Take the artifact", next: "combat" },
-      { text: "Leave it alone", next: 36 },
-      { text: "Examine it further", next: 37 }
-    ]
-  },
-  {
-    id: 36,
-    text: "You search the chamber and uncover inscriptions hinting at a secret exit. Hope flickers.",
-    choices: [
-      { text: "Follow the inscriptions", next: 37 },
-      { text: "Memorize the clues for later", next: 38 },
-      { text: "Switch to the BLUE portal", next: 11 }
-    ]
-  },
-  {
-    id: 37,
-    text: "Using the clues, you unlock a hidden door that leads to a narrow passage.",
-    choices: [
-      { text: "Enter the passage", next: 40 },
-      { text: "Examine the door for traps", next: 38 },
-      { text: "Retreat back", next: 36 }
-    ]
-  },
-  {
-    id: 38,
-    text: "You find that the door is rigged with traps—but you manage to disarm them with caution.",
-    choices: [
-      { text: "Enter the door safely", next: 40 },
-      { text: "Retreat and explore another path", next: 30 },
-      { text: "Switch to the GREEN portal", next: 1 }
-    ]
-  },
-  {
-    id: 39,
-    text: "You stumble upon a dead end where the corridor seems to close in on you.",
-    choices: [
-      { text: "Search for hidden levers", next: 41 },
-      { text: "Return to the main corridor", next: 0 },
-      { text: "Take a leap of faith", next: "combat" }
-    ]
-  },
+  // RED PORTAL branch – Traps, puzzles, and fiery challenges.
   {
     id: 40,
-    text: "Congratulations! Through perseverance you have discovered a secret exit from the dungeon. Freedom is yours.",
+    text: "You step into the RED portal. The atmosphere becomes oppressively hot; flames lick the walls and a sulfurous smell fills your nostrils.",
     choices: [
-      { text: "Restart the journey", next: 0 },
-      { text: "Exit the game", next: "exit" },
-      { text: "View your final stats", next: 50 }
+      { text: "Proceed through the flames", next: 41 },
+      { text: "Search for a safe path", next: 42 },
+      { text: "Return to the dungeon entrance", next: 0 }
     ]
   },
   {
     id: 41,
-    text: "You find a concealed lever. Pulling it, a hidden passage opens, revealing a new path.",
+    text: "As you advance, the flames intensify and a hidden trap is triggered! Burning projectiles fly toward you!",
     choices: [
-      { text: "Enter the passage", next: 42 },
-      { text: "Return to the corridor", next: 0 },
-      { text: "Switch to the RED portal", next: 21 }
+      { text: "Dodge and fight the trap (Combat)", next: "combat" },
+      { text: "Take cover behind a fallen pillar", next: 42 },
+      { text: "Scream for help", next: 43 }
     ]
   },
   {
     id: 42,
-    text: "The new passage leads deeper into the dungeon; the air grows heavy with anticipation.",
+    text: "Carefully, you navigate the fiery labyrinth and notice cryptic inscriptions on the wall.",
     choices: [
-      { text: "Proceed cautiously", next: 43 },
-      { text: "Charge ahead", next: "combat" },
-      { text: "Retreat back", next: 41 }
+      { text: "Attempt to decipher the inscriptions", next: 43 },
+      { text: "Ignore them and push forward", next: 44 },
+      { text: "Switch to the BLUE portal", next: 20 }
     ]
   },
   {
     id: 43,
-    text: "In the depths of the passage, you encounter a group of hostile creatures. Prepare for combat!",
+    text: "Deciphering the inscriptions reveals a lever that might deactivate the traps. You pull the lever and the flames subside slightly.",
     choices: [
-      { text: "Fight", next: "combat" },
-      { text: "Attempt to hide", next: 42 },
-      { text: "Try to negotiate", next: 44 }
-    ]
-  },
-  {
-    id: 44,
-    text: "Your negotiation fails and the creatures attack!",
-    choices: [
-      { text: "Fight for your life", next: "combat" },
-      { text: "Run away", next: 41 },
-      { text: "Sacrifice an item to appease them", next: 45 }
-    ]
-  },
-  {
-    id: 45,
-    text: "The creatures relent momentarily, giving you a brief window to escape.",
-    choices: [
-      { text: "Seize the opportunity and escape", next: 46 },
-      { text: "Search for useful items", next: 47 },
-      { text: "Rest for a while", next: 48 }
-    ]
-  },
-  {
-    id: 46,
-    text: "You dash through the passage, evading the creatures and emerging into another dark corridor.",
-    choices: [
-      { text: "Explore further", next: 49 },
-      { text: "Return to the main area", next: 0 },
+      { text: "Press onward", next: 44 },
+      { text: "Return to the RED portal entrance", next: 40 },
       { text: "Switch to the GREEN portal", next: 1 }
     ]
   },
   {
-    id: 47,
-    text: "Among the scattered items, you find a healing potion that restores some strength.",
+    id: 44,
+    text: "Just as you think the danger has passed, a fire elemental bursts forth from the flames!",
     choices: [
-      { text: "Drink the potion", next: 48 },
-      { text: "Save it for later", next: 49 },
-      { text: "Share it with an ally", next: 49 }
+      { text: "Engage in combat", next: "combat" },
+      { text: "Attempt to flee", next: 42 },
+      { text: "Hide behind debris", next: 43 }
+    ]
+  },
+  // New World – After escaping the dungeon (from GREEN branch node 10)
+  {
+    id: 11,
+    text: "You explore the strange new world beyond the dungeon. The sky glows with two luminous moons and the landscape is filled with alien flora and surreal vistas.",
+    choices: [
+      { text: "Venture toward a distant, sparkling lake", next: 12 },
+      { text: "Climb a hill for a better view", next: 13 },
+      { text: "Head toward a cluster of unusual structures", next: 14 }
+    ]
+  },
+  {
+    id: 12,
+    text: "At the lake, a serene water spirit appears. It offers you a quest to cleanse the lake of a mysterious toxin.",
+    choices: [
+      { text: "Accept the quest", next: 15 },
+      { text: "Decline politely", next: 16 },
+      { text: "Ask for more information", next: 17 }
+    ]
+  },
+  {
+    id: 13,
+    text: "From atop the hill, you behold an ancient observatory with inscriptions about the two moons. A reclusive scholar greets you.",
+    choices: [
+      { text: "Speak with the scholar", next: 18 },
+      { text: "Ignore the scholar and continue exploring", next: 16 },
+      { text: "Rest and absorb the view", next: 16 }
+    ]
+  },
+  {
+    id: 14,
+    text: "You discover ruins of a lost civilization. A local inhabitant emerges and offers you a quest to retrieve a sacred relic.",
+    choices: [
+      { text: "Accept the quest", next: 19 },
+      { text: "Decline and explore further", next: 16 },
+      { text: "Ask for details about the relic", next: 20 }
+    ]
+  },
+  {
+    id: 15,
+    text: "You accept the water spirit's quest and set off into the forest surrounding the lake, determined to cleanse it.",
+    choices: [
+      { text: "Venture into the dense forest", next: "combat" },
+      { text: "Seek allies among the local creatures", next: 22 },
+      { text: "Prepare for the toxic challenge", next: "combat" }
+    ]
+  },
+  {
+    id: 16,
+    text: "Choosing not to take a quest, you wander the new land, marveling at its wonders and mysteries.",
+    choices: [
+      { text: "Explore a mystical forest", next: 23 },
+      { text: "Rest near a shimmering river", next: 24 },
+      { text: "Head toward a distant mountain", next: 25 }
+    ]
+  },
+  {
+    id: 17,
+    text: "The water spirit explains that a toxic spill from an ancient source has polluted the lake. Only a brave soul can restore its purity.",
+    choices: [
+      { text: "Accept the quest now", next: 15 },
+      { text: "Decline and continue exploring", next: 16 },
+      { text: "Request a magical boon for the task", next: "combat" }
+    ]
+  },
+  {
+    id: 18,
+    text: "The scholar reveals a prophecy about the twin moons and hints that you may be the chosen one. He offers you ancient knowledge in exchange for a favor.",
+    choices: [
+      { text: "Agree to the favor", next: "combat" },
+      { text: "Ask for more details", next: 16 },
+      { text: "Decline his offer", next: 16 }
+    ]
+  },
+  {
+    id: 19,
+    text: "The local inhabitant tells you of a sacred relic hidden in ancient ruins beyond the valley. Retrieving it may change the fate of this world.",
+    choices: [
+      { text: "Accept the quest and head to the ruins", next: "combat" },
+      { text: "Decline and continue exploring", next: 16 },
+      { text: "Ask for further details", next: 20 }
+    ]
+  },
+  {
+    id: 20,
+    text: "The inhabitant provides detailed hints about the relic’s location and warns of dangerous guardians along the way.",
+    choices: [
+      { text: "Set out toward the ruins", next: "combat" },
+      { text: "Return to the village for assistance", next: 22 },
+      { text: "Decline and explore another region", next: 16 }
+    ]
+  },
+  {
+    id: 21,
+    text: "Deep in the mystical forest, you encounter strange glowing trees and hostile creatures guarding ancient secrets.",
+    choices: [
+      { text: "Engage the forest creature in combat", next: "combat" },
+      { text: "Follow a hidden path deeper into the forest", next: 23 },
+      { text: "Return to the lake", next: 12 }
+    ]
+  },
+  {
+    id: 22,
+    text: "A friendly, alien inhabitant approaches and offers to guide you through this wondrous land.",
+    choices: [
+      { text: "Accept the guide's help", next: 23 },
+      { text: "Ask the guide for more information", next: 24 },
+      { text: "Thank the guide and part ways", next: 24 }
+    ]
+  },
+  {
+    id: 23,
+    text: "You venture deeper into the new world, where each step reveals secrets of ancient magic and perilous beauty.",
+    choices: [
+      { text: "Examine mysterious ruins", next: "combat" },
+      { text: "Collect magical artifacts", next: 24 },
+      { text: "Venture further into unknown lands", next: 25 }
+    ]
+  },
+  {
+    id: 24,
+    text: "Beside a shimmering river, you take time to rest. The soothing sounds rejuvenate your spirit.",
+    choices: [
+      { text: "Meditate by the river", next: 25 },
+      { text: "Gather resources", next: 25 },
+      { text: "Continue exploring the land", next: 26 }
+    ]
+  },
+  {
+    id: 25,
+    text: "At the foot of a majestic mountain, the twin moons cast an ethereal glow. The landscape is both alien and awe-inspiring.",
+    choices: [
+      { text: "Climb the mountain for a panoramic view", next: 26 },
+      { text: "Search for ancient inscriptions on the rocks", next: "combat" },
+      { text: "Descend to explore the foothills", next: 26 }
+    ]
+  },
+  {
+    id: 26,
+    text: "Your journey in this strange new world continues. Diverse landscapes and hidden dangers lie ahead.",
+    choices: [
+      { text: "Venture toward a bustling settlement", next: 27 },
+      { text: "Head into a neighboring enchanted forest", next: 28 },
+      { text: "Wander an open plain under the twin moons", next: 29 }
+    ]
+  },
+  {
+    id: 27,
+    text: "In a bustling settlement, locals greet you with curiosity. A merchant offers you a quest to retrieve a rare ingredient.",
+    choices: [
+      { text: "Accept the quest", next: "combat" },
+      { text: "Decline and explore the settlement", next: 28 },
+      { text: "Ask for more information", next: 28 }
+    ]
+  },
+  {
+    id: 28,
+    text: "In the enchanted forest, an enigmatic guide offers you wisdom and a quest to aid their people.",
+    choices: [
+      { text: "Accept the guide's quest", next: "combat" },
+      { text: "Decline and continue on your way", next: 29 },
+      { text: "Ask for directions to a nearby village", next: 29 }
+    ]
+  },
+  {
+    id: 29,
+    text: "Wandering the open plain under the twin moons, you feel both isolated and inspired by the otherworldly beauty.",
+    choices: [
+      { text: "Sit and meditate under the moons", next: 30 },
+      { text: "Search the plains for signs of life", next: "combat" },
+      { text: "Set up camp and rest", next: 30 }
+    ]
+  },
+  {
+    id: 30,
+    text: "As dawn approaches, you decide your next move in this land of wonder and danger.",
+    choices: [
+      { text: "Venture toward a distant mountain range", next: 31 },
+      { text: "Explore a nearby enchanted forest", next: 32 },
+      { text: "Return to the settlement for more quests", next: 27 }
+    ]
+  },
+  {
+    id: 31,
+    text: "In the mountain range, you encounter a tribe of alien warriors guarding ancient secrets.",
+    choices: [
+      { text: "Engage in combat", next: "combat" },
+      { text: "Attempt peaceful communication", next: 32 },
+      { text: "Retreat and explore elsewhere", next: 30 }
+    ]
+  },
+  {
+    id: 32,
+    text: "Within the enchanted forest, a wise elder offers you a quest to recover a lost relic.",
+    choices: [
+      { text: "Accept the quest", next: "combat" },
+      { text: "Decline and continue exploring", next: 33 },
+      { text: "Ask for more details", next: 33 }
+    ]
+  },
+  {
+    id: 33,
+    text: "Your journey continues as you explore the diverse realms of this strange new world.",
+    choices: [
+      { text: "Head back to the settlement", next: 27 },
+      { text: "Venture into a neighboring valley", next: 34 },
+      { text: "Search for hidden treasures", next: "combat" }
+    ]
+  },
+  {
+    id: 34,
+    text: "In the neighboring valley, a mysterious figure offers you a quest of great importance.",
+    choices: [
+      { text: "Accept the quest", next: "combat" },
+      { text: "Decline and wander further", next: 35 },
+      { text: "Request more information", next: 35 }
+    ]
+  },
+  {
+    id: 35,
+    text: "The figure reveals the quest involves recovering a magical artifact from forgotten ruins.",
+    choices: [
+      { text: "Set out for the ruins", next: "combat" },
+      { text: "Return to the valley center", next: 34 },
+      { text: "Seek assistance from the locals", next: 36 }
+    ]
+  },
+  {
+    id: 36,
+    text: "With local help, you prepare to face the challenges within the ruin.",
+    choices: [
+      { text: "Enter the ruin", next: "combat" },
+      { text: "Scout the area first", next: 37 },
+      { text: "Return to the settlement", next: 27 }
+    ]
+  },
+  {
+    id: 37,
+    text: "Scouting the area, you find signs of past adventurers and hidden dangers.",
+    choices: [
+      { text: "Investigate the signs", next: "combat" },
+      { text: "Avoid the danger and return", next: 36 },
+      { text: "Head back to the valley", next: 34 }
+    ]
+  },
+  {
+    id: 38,
+    text: "Your adventures have led you to unexpected challenges. The journey is arduous but filled with wonder.",
+    choices: [
+      { text: "Reflect and rest", next: 39 },
+      { text: "Push forward", next: 40 },
+      { text: "Return to the settlement", next: 27 }
+    ]
+  },
+  {
+    id: 39,
+    text: "Taking a moment to rest, you recover and gather strength for what lies ahead.",
+    choices: [
+      { text: "Set out again", next: 40 },
+      { text: "Explore the surroundings", next: 38 },
+      { text: "Return to the settlement", next: 27 }
+    ]
+  },
+  {
+    id: 40,
+    text: "A final challenge awaits at the edge of the known world.",
+    choices: [
+      { text: "Face the challenge head-on", next: "combat" },
+      { text: "Seek an alternative path", next: 41 },
+      { text: "Return to the settlement", next: 27 }
+    ]
+  },
+  {
+    id: 41,
+    text: "You discover an alternative path winding through breathtaking landscapes and mysterious ruins.",
+    choices: [
+      { text: "Explore the alternative path", next: 42 },
+      { text: "Return to the challenge", next: 40 },
+      { text: "Set up camp", next: 42 }
+    ]
+  },
+  {
+    id: 42,
+    text: "Your journey in this strange new world continues with endless adventures.",
+    choices: [
+      { text: "Venture deeper into unknown lands", next: 43 },
+      { text: "Return to a familiar settlement", next: 44 },
+      { text: "Take a moment to reflect", next: 45 }
+    ]
+  },
+  {
+    id: 43,
+    text: "In unknown lands, you face trials that test your resolve.",
+    choices: [
+      { text: "Confront the challenges", next: "combat" },
+      { text: "Seek guidance from a local sage", next: 44 },
+      { text: "Retreat and regroup", next: 42 }
+    ]
+  },
+  {
+    id: 44,
+    text: "Returning to the settlement, you share your tales and prepare for new quests.",
+    choices: [
+      { text: "Accept a new quest", next: "combat" },
+      { text: "Decline and rest", next: 45 },
+      { text: "Venture out again", next: 42 }
+    ]
+  },
+  {
+    id: 45,
+    text: "In a moment of quiet reflection, you gather strength for the adventures to come.",
+    choices: [
+      { text: "Venture forth into the wild", next: 46 },
+      { text: "Return to the settlement", next: 44 },
+      { text: "Contemplate your journey", next: 45 }
+    ]
+  },
+  {
+    id: 46,
+    text: "Your journey has been long and challenging, yet you remain undaunted.",
+    choices: [
+      { text: "Embrace the call of adventure", next: 47 },
+      { text: "Return home with newfound wisdom", next: 48 },
+      { text: "Seek one final quest", next: "combat" }
+    ]
+  },
+  {
+    id: 47,
+    text: "You continue your adventure, your legend growing with every trial.",
+    choices: [
+      { text: "Explore a distant realm", next: 49 },
+      { text: "Plan your next move", next: 48 },
+      { text: "Accept a mysterious quest", next: "combat" }
     ]
   },
   {
     id: 48,
-    text: "Refreshed and reinvigorated, you press on with newfound determination.",
+    text: "Returning home, you reflect on the journey and the lessons learned.",
     choices: [
-      { text: "Advance cautiously", next: 49 },
-      { text: "Charge ahead", next: "combat" },
-      { text: "Rest a bit longer", next: 47 }
+      { text: "Restart your adventure", next: 0 },
+      { text: "Exit the game", next: "exit" },
+      { text: "Review your final achievements", next: 50 }
     ]
   },
   {
     id: 49,
-    text: "You reach a junction in the passage, with paths diverging in multiple directions.",
+    text: "In a distant realm, you encounter wonders and challenges beyond imagination.",
     choices: [
-      { text: "Take the left path (GREEN chain)", next: 1 },
-      { text: "Take the middle path (BLUE chain)", next: 11 },
-      { text: "Take the right path (RED chain)", next: 21 }
+      { text: "Venture into the unknown", next: "combat" },
+      { text: "Explore a thriving city", next: 48 },
+      { text: "Return to your roots", next: 48 }
     ]
   },
   {
     id: 50,
-    text: "Final Stats and Game Over Summary. Reflect on your journey.",
+    text: "Final Stats and Game Over Summary. Reflect on your epic journey.",
     choices: [
       { text: "Restart the journey", next: 0 },
       { text: "Exit the game", next: "exit" },
@@ -468,8 +582,6 @@ const storyData = [
   }
 ];
 
-
-// Enemy Object with SPecial Abilities
 const sampleEnemy = {
   name: "Dungeon Guard",
   stats: {
@@ -480,137 +592,7 @@ const sampleEnemy = {
     strength: 15,
     agility: 10
   },
-  specialAbilities: ["Ensare", "Root Strike", "Uproot"],
-  name: "Living Tree",
-  stats: {
-    life: 80,
-    mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 20,
-    agility: 10
-  },
-  specialAbilities: ["Ensare", "Root Strike", "Uproot"],
-  name: "Wyvern",
-  stats: {
-    life: 200,
-    mana: 30,
-    stamina: 150,
-    dexterity: 150,
-    strength: 200,
-    agility: 125
-  },
-  specialAbilities: ["Fly", "Acid Breath", "Wind Attack"],
-  name: "Goblin Warlord",
-  stats: {
-    life: 100,
-    mana: 30,
-    stamina: 125,
-    dexterity: 150,
-    strength: 200,
-    agility: 100
-  },
-  specialAbilities: ["double SLash", "Fear", "Dynamic Strike"],
-  name: "Goblin",
-  stats: {
-    life: 80,
-    mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 20,
-    agility: 10
-  },
-  specialAbilities: ["Slash", "Roar", "Quick Strike"],
-  name: "Hobgoblin",
-  stats: {
-    life: 90,
-    mana: 30,
-    stamina: 75,
-    dexterity: 1100,
-    strength: 90,
-    agility: 100
-  },
-  specialAbilities: ["Bite", "Poison", "Ambush"],
-  name: "Goblin Shamen",
-  stats: {
-    life: 100,
-    mana: 200,
-    stamina: 50,
-    dexterity: 15,
-    strength: 40,
-    agility: 10
-  },
-  specialAbilities: ["FireBall", "Ensnare", "Blind"],
-  name: "Orc",
-  stats: {
-    life: 100,
-    mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 140,
-    agility: 75
-  },
-  specialAbilities: ["Weapon Smash", "Brute Strength", "Taunt"],
-  name: "Bandit",
-  stats: {
-    life: 80,
-    mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 20,
-    agility: 10
-  },
-  specialAbilities: ["Loot", "Multi-Stirike", "Intimidate"],
-  name: "Thief",
-  stats: {
-    life: 80,
-    mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 20,
-    agility: 10
-  },
-  specialAbilities: ["Steal", "Acrobatics", "Stab"],
-  name: "Evil Mage",
-  stats: {
-    life: 80,
-    mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 20,
-    agility: 10
-  },
-  specialAbilities: ["Dark Flame", "Ice Storm", "Meteor Strike"],
-  name: "Lich",
-  stats: {
-    life: 80,
-    mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 20,
-    agility: 10
-  },
-  specialAbilities: ["Raise Dead", "Death Magic", "Heal undead"],
-  name: "Undead",
-  stats: {
-    life: 80,
-    mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 20,
-    agility: 10
-  },
-  specialAbilities: ["Bite", "Regenerate", "Slash"],
-  name: "Vampire",
-  stats: {
-    life: 80,
-    mana: 30,
-    stamina: 50,
-    dexterity: 15,
-    strength: 20,
-    agility: 10
-  },
-  specialAbilities: ["Life Drain", "Bite", "Evasion"]
+  specialAbilities: ["Club Smash", "Shield Block", "Intimidate"]
 };
 
 function Game() {
@@ -627,7 +609,7 @@ function Game() {
   } = useStore();
 
   const updateStory = async (next) => {
-    // Save game state after making a choice
+    // Save game state after making a choice.
     useStore.setState({ currentScene: next });
     await fetch(`${API_URL}/save`, {
       method: "POST",
@@ -638,34 +620,33 @@ function Game() {
   };
 
   const startCombat = () => {
-    // Simple combat simulation: compare player's strength with enemy strength
+    // Simple combat simulation: compare player's strength with enemy's strength.
     const playerStrength = character.stats.strength;
     const enemyStrength = sampleEnemy.stats.strength;
     const diffPercent = Math.abs(playerStrength - enemyStrength) / enemyStrength;
     const expEarned = Math.round(diffPercent * 100);
     addExperience(expEarned);
-    
-    // Check if level up criteria are met after combat
+
     if (experience + expEarned >= level * 200) {
       levelUp();
       alert(`Congratulations! You reached level ${level + 1}. Your stats have increased!`);
     }
-    
-    // After combat, let the player choose one of the enemy's abilities
-    alert(`You defeated ${sampleEnemy.name} and earned ${expEarned} EXP! Now choose one ability from the enemy to add to your skills.`);
+
+    alert(`You defeated ${sampleEnemy.name} and earned ${expEarned} EXP! Now choose an ability from the enemy to add to your skills.`);
   };
 
   const handleChoice = async (choice) => {
     if (choice.next === "combat") {
       startCombat();
-      // update story
+      // After combat, for simplicity return to the current branch (here, back to node 0).
       await updateStory(0);
+    } else if (choice.next === "exit") {
+      useStore.setState({ screen: 'login' });
     } else {
       await updateStory(choice.next);
     }
   };
 
-  // Find the current story node
   const node = storyData.find(n => n.id === currentScene);
   if (!node) return <div>No story available.</div>;
 
