@@ -1,7 +1,8 @@
-// StoryScreen.jsx
 import React from "react";
+import useStore from "../store";
 
-const API_URL = "http://localhost:8081/api";
+// Set the API_URL to match the backend endpoints (without the /api suffix)
+const API_URL = "http://localhost:8081";
 
 const storyData = [
   {
@@ -31,7 +32,7 @@ const storyData = [
       { text: "Try the RED portal", next: 40 }
     ]
   },
-  // ... (Include all additional story nodes as in your previous specification)
+  // … (Include all other story nodes as defined in your full story data)
   {
     id: 50,
     text: "Final Stats and Game Over Summary. Reflect on your epic journey.",
@@ -44,6 +45,30 @@ const storyData = [
 ];
 
 const StoryScreen = ({ currentScene, onChoice }) => {
+  // Get the current user from the store
+  const user = useStore(state => state.user);
+
+  // Save function that sends the entire game state to the backend
+  const saveGame = async () => {
+    try {
+      const gameState = useStore.getState(); // Retrieve the entire game state
+      const response = await fetch(`${API_URL}/save`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: user, gameState })
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText);
+      }
+      const data = await response.json();
+      alert(data.message || "Game saved successfully!");
+    } catch (error) {
+      console.error("Error saving game:", error);
+      alert("Failed to save game. Please try again.");
+    }
+  };
+
   const node = storyData.find(n => n.id === currentScene);
   if (!node) return <div>No story available.</div>;
 
@@ -58,6 +83,8 @@ const StoryScreen = ({ currentScene, onChoice }) => {
           </button>
         ))}
       </div>
+      {/* Save button to persist game state */}
+      <button onClick={saveGame}>Save Game</button>
     </div>
   );
 };
