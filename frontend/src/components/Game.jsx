@@ -3,115 +3,8 @@ import useStore from '../store';
 
 const API_URL = "http://localhost:8081/api";
 
-// Expanded Sample Enemy Templates
-const sampleEnemies = [
-  {
-    name: "Dungeon Guardian",
-    baseStats: { life: 100, mana: 30, stamina: 80, dexterity: 12, strength: 15, agility: 10 },
-    specialAbilities: ["Sword Slash", "Shield Block", "Intimidate"]
-  },
-  {
-    name: "Dungeon Troll",
-    baseStats: { life: 150, mana: 0, stamina: 90, dexterity: 40, strength: 100, agility: 10 },
-    specialAbilities: ["Club Smash", "Bite", "Roar"]
-  },
-  {
-    name: "Dungeon Goblin",
-    baseStats: { life: 70, mana: 0, stamina: 60, dexterity: 40, strength: 50, agility: 25 },
-    specialAbilities: ["Scratch", "Bite", "Ambush"]
-  },
-  {
-    name: "Dungeon Hobgoblin",
-    baseStats: { life: 90, mana: 0, stamina: 80, dexterity: 40, strength: 80, agility: 10 },
-    specialAbilities: ["Fury Strike", "Kick", "Ambush"]
-  },
-  {
-    name: "Dungeon Skeleton",
-    baseStats: { life: 80, mana: 20, stamina: 70, dexterity: 40, strength: 60, agility: 15 },
-    specialAbilities: ["Strike", "Punch", "Regenerate"]
-  },
-  // Additional enemies:
-  {
-    name: "Dragon",
-    baseStats: { life: 300, mana: 150, stamina: 200, dexterity: 30, strength: 250, agility: 50 },
-    specialAbilities: ["Fire Breath", "Tail Swipe", "Roar"]
-  },
-  {
-    name: "Wyvern",
-    baseStats: { life: 200, mana: 50, stamina: 150, dexterity: 40, strength: 180, agility: 80 },
-    specialAbilities: ["Wing Buffet", "Acid Spit", "Dive Attack"]
-  },
-  {
-    name: "Ghoul",
-    baseStats: { life: 80, mana: 20, stamina: 100, dexterity: 20, strength: 40, agility: 30 },
-    specialAbilities: ["Claw Swipe", "Bite", "Infect"]
-  },
-  {
-    name: "Dead Elf",
-    baseStats: { life: 90, mana: 100, stamina: 80, dexterity: 30, strength: 20, agility: 40 },
-    specialAbilities: ["Shadow Strike", "Curse", "Frost Arrow"]
-  },
-  {
-    name: "Lich",
-    baseStats: { life: 120, mana: 200, stamina: 70, dexterity: 25, strength: 30, agility: 20 },
-    specialAbilities: ["Raise Dead", "Dark Magic", "Bone Shatter"]
-  },
-  {
-    name: "Wolf",
-    baseStats: { life: 60, mana: 0, stamina: 90, dexterity: 25, strength: 30, agility: 50 },
-    specialAbilities: ["Howl", "Bite", "Pounce"]
-  },
-  {
-    name: "Ogre",
-    baseStats: { life: 150, mana: 0, stamina: 150, dexterity: 15, strength: 120, agility: 20 },
-    specialAbilities: ["Club Smash", "Stomp", "Roar"]
-  },
-  {
-    name: "Demon Hound",
-    baseStats: { life: 80, mana: 30, stamina: 110, dexterity: 30, strength: 50, agility: 60 },
-    specialAbilities: ["Fiery Bite", "Speed Dash", "Howl"]
-  },
-  {
-    name: "Giant Spider",
-    baseStats: { life: 70, mana: 0, stamina: 100, dexterity: 50, strength: 40, agility: 70 },
-    specialAbilities: ["Venom Bite", "Web Shot", "Quick Climb"]
-  },
-  {
-    name: "Killer Bat",
-    baseStats: { life: 40, mana: 0, stamina: 80, dexterity: 40, strength: 20, agility: 80 },
-    specialAbilities: ["Sonic Screech", "Bite", "Echolocation"]
-  },
-  {
-    name: "Swarm of Rats",
-    baseStats: { life: 30, mana: 0, stamina: 50, dexterity: 30, strength: 10, agility: 40 },
-    specialAbilities: ["Bite", "Overwhelm", "Scent"]
-  },
-  {
-    name: "Wall Worm",
-    baseStats: { life: 50, mana: 0, stamina: 60, dexterity: 20, strength: 15, agility: 10 },
-    specialAbilities: ["Burrow", "Acid Spit", "Ambush"]
-  }
-];
+// Story Data Array – Each node represents a stage in the story.
 
-// Returns a random enemy from sampleEnemies with a random level (1-5) and scaled stats.
-function getRandomEnemy() {
-  const enemyTemplate = sampleEnemies[Math.floor(Math.random() * sampleEnemies.length)];
-  const level = Math.floor(Math.random() * 5) + 1; // Level 1 to 5
-  function randomModifier() {
-    return 0.9 + Math.random() * 0.2; // Modifier between 0.9 and 1.1
-  }
-  const stats = {
-    life: Math.round(enemyTemplate.baseStats.life * level * randomModifier()),
-    mana: Math.round(enemyTemplate.baseStats.mana * level * randomModifier()),
-    stamina: Math.round(enemyTemplate.baseStats.stamina * level * randomModifier()),
-    dexterity: Math.round(enemyTemplate.baseStats.dexterity * level * randomModifier()),
-    strength: Math.round(enemyTemplate.baseStats.strength * level * randomModifier()),
-    agility: Math.round(enemyTemplate.baseStats.agility * level * randomModifier())
-  };
-  return { name: enemyTemplate.name, stats: stats, specialAbilities: enemyTemplate.specialAbilities, level: level };
-}
-
-// Story Data Array – (Nodes remain similar to your previous version.)
 const storyData = [
   // Node 0: Awakening in the dungeon with three portals.
   {
@@ -123,7 +16,7 @@ const storyData = [
       { text: "Enter the RED portal", next: 40 }
     ]
   },
-  // GREEN portal branch (nodes 1-10) leads to freedom.
+  // GREEN PORTAL branch – count up to 10 for escape.
   {
     id: 1,
     text: "You step into the GREEN portal. The environment shifts but the oppressive dungeon remains. (Green count: 1)",
@@ -214,10 +107,10 @@ const storyData = [
       { text: "Search for local inhabitants", next: 13 }
     ]
   },
-  // BLUE portal branch – Trials, puzzles, and combat.
+  // BLUE PORTAL branch – Trials, puzzles, and combat.
   {
     id: 20,
-    text: "You step into the BLUE portal. The air turns cool and misty as echoes of distant battle cries resonate.",
+    text: "You step into the BLUE portal. The air turns cool and misty as you enter a corridor where echoes of distant battle cries resonate.",
     choices: [
       { text: "Proceed cautiously", next: 21 },
       { text: "Charge into the mist", next: 22 },
@@ -244,7 +137,7 @@ const storyData = [
   },
   {
     id: 23,
-    text: "Following the movements, you discover an ancient puzzle carved into the stone.",
+    text: "Following the movements, you discover an ancient puzzle carved into the cold stone.",
     choices: [
       { text: "Attempt to solve the puzzle", next: 25 },
       { text: "Ignore the puzzle and press forward", next: 26 },
@@ -271,14 +164,14 @@ const storyData = [
   },
   {
     id: 26,
-    text: "You forge ahead through the hidden passage and encounter a fearsome foe emerging from the mist!",
+    text: "You forge ahead through the hidden passage, only to encounter a fearsome foe emerging from the mist!",
     choices: [
       { text: "Engage in combat", next: "combat" },
       { text: "Attempt to hide", next: 21 },
       { text: "Retreat to the blue corridor", next: 21 }
     ]
   },
-  // RED portal branch – Traps, puzzles, and fiery challenges.
+  // RED PORTAL branch – Traps, puzzles, and fiery challenges.
   {
     id: 40,
     text: "You step into the RED portal. The atmosphere becomes oppressively hot; flames lick the walls and a sulfurous smell fills your nostrils.",
@@ -687,6 +580,59 @@ const storyData = [
   }
 ];
 
+const sampleEnemy = {
+  name: "Dungeon Guardian",
+  stats: {
+    life: 100,
+    mana: 30,
+    stamina: 80,
+    dexterity: 12,
+    strength: 15,
+    agility: 10
+  },
+  specialAbilities: ["sword slash", "Shield Block", "Intimidate"],
+  name: "Dungeon Troll",
+  stats: {
+    life: 100,
+    mana: 0,
+    stamina: 80,
+    dexterity: 40,
+    strength: 100,
+    agility: 10
+  },
+  specialAbilities: ["Club Smash", "Bite", "Roar"],
+  name: "Dungeon GOblin",
+  stats: {
+    life: 50,
+    mana: 0,
+    stamina: 80,
+    dexterity: 40,
+    strength: 50,
+    agility: 25
+  },
+  specialAbilities: ["scratch", "bite", "help"],
+  name: "Dungeon Hobgoblin",
+  stats: {
+    life: 100,
+    mana: 0,
+    stamina: 80,
+    dexterity: 40,
+    strength: 100,
+    agility: 10
+  },
+  specialAbilities: ["fury strike", "kick", "ambush"],
+  name: "Dungeon Skelton",
+  stats: {
+    life: 100,
+    mana: 20,
+    stamina: 80,
+    dexterity: 40,
+    strength: 100,
+    agility: 10
+  },
+  specialAbilities: ["strike", "punch", "regenerate"]
+};
+
 function Game() {
   const {
     character,
@@ -711,74 +657,20 @@ function Game() {
     setCurrentScene(next);
   };
 
-  // Modified combat simulation.
   const startCombat = () => {
-    // Generate a random enemy.
-    const enemy = getRandomEnemy();
-    // Initialize health values.
-    let playerHealth = character.stats.life;
-    let enemyHealth = enemy.stats.life;
-    
-    // Determine number of attacks per round based on agility differences.
-    const playerAttacks = Math.max(1, 1 + Math.floor((character.stats.agility - enemy.stats.agility) / 10));
-    const enemyAttacks = Math.max(1, 1 + Math.floor((enemy.stats.agility - character.stats.agility) / 10));
+    // Simple combat simulation: compare player's strength with enemy's strength.
+    const playerStrength = character.stats.strength;
+    const enemyStrength = sampleEnemy.stats.strength;
+    const diffPercent = Math.abs(playerStrength - enemyStrength) / enemyStrength;
+    const expEarned = Math.round(diffPercent * 100);
+    addExperience(expEarned);
 
-    // Calculate player's damage per attack.
-    let playerBaseDamage = character.stats.strength;
-    let playerMultiplier = 5;
-    if (character.stats.strength > enemy.stats.strength) {
-      playerMultiplier += (character.stats.strength - enemy.stats.strength) / enemy.stats.strength;
-    }
-    if (character.stats.dexterity > enemy.stats.strength) {
-      const reduction = Math.min(0.5, (character.stats.dexterity - enemy.stats.strength) / 100);
-      playerMultiplier *= (1 - reduction);
-    }
-    const playerDamage = playerBaseDamage * playerMultiplier;
-
-    // Calculate enemy's damage per attack.
-    let enemyBaseDamage = enemy.stats.strength;
-    let enemyMultiplier = 1;
-    if (enemy.stats.strength > character.stats.strength) {
-      enemyMultiplier += (enemy.stats.strength - character.stats.strength) / character.stats.strength;
-    }
-    if (enemy.stats.dexterity > character.stats.strength) {
-      const reduction = Math.min(0.5, (enemy.stats.dexterity - character.stats.strength) / 100);
-      enemyMultiplier *= (1 - reduction);
-    }
-    const enemyDamage = enemyBaseDamage * enemyMultiplier;
-
-    // Simulate rounds.
-    let round = 1;
-    while (playerHealth > 0 && enemyHealth > 0) {
-      // Player attacks.
-      const totalPlayerDamage = playerDamage * playerAttacks;
-      enemyHealth -= totalPlayerDamage;
-      // If enemy defeated, break.
-      if (enemyHealth <= 0) break;
-      // Enemy attacks.
-      const totalEnemyDamage = enemyDamage * enemyAttacks;
-      playerHealth -= totalEnemyDamage;
-      round++;
+    if (experience + expEarned >= level * 200) {
+      levelUp();
+      alert(`Congratulations! You reached level ${level + 1}. Your stats have increased!`);
     }
 
-    // Outcome:
-    if (playerHealth <= 0) {
-      alert(`You were defeated by ${enemy.name}! GAME OVER.`);
-      // Restart the story (Game Over).
-      updateStory(50);
-    } else {
-      // Award experience based on enemy level.
-      const expEarned = enemy.level * 100;
-      addExperience(expEarned);
-      if (experience + expEarned >= level * 200) {
-        levelUp();
-        alert(`Congratulations! You reached level ${level + 1}. Your stats have increased!`);
-      }
-      // Randomly add one of the enemy's abilities.
-      const randomAbility = enemy.specialAbilities[Math.floor(Math.random() * enemy.specialAbilities.length)];
-      addAbility(randomAbility);
-      alert(`You defeated ${enemy.name} (Level ${enemy.level}) and earned ${expEarned} EXP! You gained the ability: ${randomAbility}.`);
-    }
+    alert(`You defeated ${sampleEnemy.name} and earned ${expEarned} EXP! Now choose an ability from the enemy to add to your skills.`);
   };
 
   const handleChoice = async (choice) => {

@@ -66,8 +66,8 @@ function Customization() {
       case "Berserker":
         baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
         break;
-      // default:
-      //   baseStats = { life: 100, mana: 10, stamina: 10, dexterity: 10, strength: 10, agility: 10 };
+      default:
+        baseStats = { life: 100, mana: 10, stamina: 10, dexterity: 10, strength: 10, agility: 10 };
     }
     
     const character = {
