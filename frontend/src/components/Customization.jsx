@@ -1,4 +1,4 @@
-// Customization.jsx :contentReference[oaicite:2]{index=2}
+// Customization.jsx
 import React, { useState } from 'react';
 import useStore from '../store';
 
@@ -6,10 +6,9 @@ const API_URL = "http://localhost:8081/api";
 
 function Customization() {
   const [alignment, setAlignment] = useState('hero');
-  const [charClass, setCharClass] = useState('warrior');
+  const [charClass, setCharClass] = useState('Warrior');
   const [ability, setAbility] = useState('fireball');
   const [tendency, setTendency] = useState('Blocking');
-
   const setCharacter = useStore(state => state.setCharacter);
   const setScreen = useStore(state => state.setScreen);
 
@@ -27,7 +26,24 @@ function Customization() {
       case "Rogue":
         baseStats = { life: 120, mana: 80, stamina: 100, dexterity: 18, strength: 12, agility: 20 };
         break;
-      // …other classes as needed
+      case "Paladin":
+        baseStats = { life: 150, mana: 80, stamina: 100, dexterity: 50, strength: 25, agility: 20 };
+        break;
+      case "Arcane Rogue":
+        baseStats = { life: 120, mana: 100, stamina: 100, dexterity: 100, strength: 15, agility: 50 };
+        break;
+      case "Necromancer":
+        baseStats = { life: 80, mana: 200, stamina: 100, dexterity: 120, strength: 10, agility: 20 };
+        break;
+      case "Wizard":
+        baseStats = { life: 100, mana: 150, stamina: 80, dexterity: 12, strength: 8, agility: 14 };
+        break;
+      case "Shaman":
+        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        break;
+      case "Warlock":
+        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        break;
       default:
         baseStats = { life: 100, mana: 10, stamina: 10, dexterity: 10, strength: 10, agility: 10 };
     }
@@ -40,24 +56,28 @@ function Customization() {
       battleTendency: tendency
     };
 
-    // Reset additional state values (including defeats)
+    // Reset defeat count and initialize experience/level.
     useStore.setState({
       character,
       currentScene: 0,
       experience: 0,
       level: 1,
-      defeats: 0,
-      specialAbilities: [ability]
+      defeats: 0
     });
 
-    const stateToSave = useStore.getState();
-    await fetch(`${API_URL}/save`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: stateToSave.user, gameState: stateToSave })
-    });
+    // Save state to backend.
+    try {
+      const stateToSave = useStore.getState();
+      await fetch(`${API_URL}/save`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: stateToSave.user, gameState: stateToSave })
+      });
+    } catch (error) {
+      console.error("Save error:", error);
+    }
     
-    setScreen('game');
+    setScreen('story');
   };
 
   return (
@@ -75,14 +95,15 @@ function Customization() {
         <label>
           Choose your class:
           <select value={charClass} onChange={e => setCharClass(e.target.value)}>
-            <option value="warrior">Warrior</option>
-            <option value="mage">Mage</option>
-            <option value="rogue">Rogue</option>
-            <option value="druid">Druid</option>
-            <option value="arcane rogue">Arcane Rogue</option>
-            <option value="paladin">Paladin</option>
-            <option value="berserker">Berserker</option>
-            <option value="archer">Archer</option>
+            <option value="Warrior">Warrior</option>
+            <option value="Mage">Mage</option>
+            <option value="Rogue">Rogue</option>
+            <option value="Paladin">Paladin</option>
+            <option value="Arcane Rogue">Arcane Rogue</option>
+            <option value="Necromancer">Necromancer</option>
+            <option value="Wizard">Wizard</option>
+            <option value="Shaman">Shaman</option>
+            <option value="Warlock">Warlock</option>
           </select>
         </label>
         <br />

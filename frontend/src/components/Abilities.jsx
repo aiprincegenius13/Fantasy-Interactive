@@ -1,4 +1,4 @@
-// Abilities.jsx :contentReference[oaicite:0]{index=0}
+// Abilities.jsx
 import React from "react";
 import useStore from "../store";
 
@@ -7,14 +7,14 @@ const abilities = {
   "Warrior": {
     "Berserk": () => ({ boost: { strength: 10, agility: 20 }, duration: 15, effect: "Enhance strength and Agility temporarily" }),
     "Shield Bash": () => ({ damage: 25, stun: 5, effect: "Stuns the enemy for five seconds" }),
-    "Power Strike": () => ({ damage: 75, effect: "Powerful melee attack dealing 75 damage to the enemy" }),
+    "Power Strike": () => ({ damage: 75, effect: "Deals 75 damage" }),
     "Defensive Stance": () => ({ boost: { strength: 10, constitution: 50 }, duration: 15, effect: "Enhance strength and Constitution temporarily" }),
     "Battle Cry": () => ({ boost: { strength: 20, staminaCost: 5 }, effect: "Enhance strength temporarily" }),
-    "Whirlwind": () => ({ damage: 50, effect: "Powerful melee attack dealing 50 damage to the enemy" }),
-    "Downward Strike": () => ({ damage: 75, effect: "Powerful melee attack dealing 75 damage to the enemy" }),
+    "Whirlwind": () => ({ damage: 50, effect: "Deals 50 damage" }),
+    "Downward Strike": () => ({ damage: 75, effect: "Deals 75 damage" }),
     "Bulwark": () => ({ boost: { strength: 10, constitution: 20 }, duration: 15, effect: "Enhance strength and Constitution temporarily" }),
     "Evasion": () => ({ boost: { dexterity: 25, agility: 25 }, duration: 15, effect: "Enhance dexterity and Agility temporarily" }),
-    "Rampage": () => ({ damage: 100, effect: "Powerful melee attack dealing 100 damage to the enemy" })
+    "Rampage": () => ({ damage: 100, effect: "Deals 100 damage" })
   },
   // Mage Abilities
   "Mage": {
@@ -122,11 +122,17 @@ const abilities = {
   }
 };
 
-const Abilities = () => {
+const Abilities = ({ onUseAbility }) => {
   const character = useStore(state => state.character);
   const charClass = character?.class || "";
-
-  const handleUseAbility = (abilityName) => {
+  
+  // If an external onUseAbility prop is provided (from BattleScreen), use it;
+  // otherwise, use our internal handler.
+  const handleUse = (abilityName) => {
+    if (onUseAbility) {
+      onUseAbility(abilityName);
+      return;
+    }
     const abilityFunc = abilities[charClass]?.[abilityName];
     if (abilityFunc) {
       const effect = abilityFunc();
@@ -153,7 +159,7 @@ const Abilities = () => {
       <ul>
         {Object.keys(classAbilities).map((abilityName, idx) => (
           <li key={idx}>
-            <button onClick={() => handleUseAbility(abilityName)}>
+            <button onClick={() => handleUse(abilityName)}>
               {abilityName}
             </button>
           </li>

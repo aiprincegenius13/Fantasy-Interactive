@@ -1,4 +1,4 @@
-// server.js :contentReference[oaicite:3]{index=3}
+// server.js
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
-app.post('/api/login', async (req, res) => {
+app.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -32,6 +32,7 @@ app.post('/api/login', async (req, res) => {
     }
     let user = await User.findOne({ username });
     if (!user) {
+      // Create new user
       user = new User({ username, password, gameState: null });
       await user.save();
     } else {
@@ -46,7 +47,7 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-app.post('/api/save', async (req, res) => {
+app.post('/save', async (req, res) => {
   try {
     const { username, gameState } = req.body;
     if (!username || !gameState) {
@@ -65,7 +66,7 @@ app.post('/api/save', async (req, res) => {
   }
 });
 
-app.get('/api/load', async (req, res) => {
+app.get('/load', async (req, res) => {
   try {
     const { username } = req.query;
     if (!username) {
@@ -82,8 +83,7 @@ app.get('/api/load', async (req, res) => {
   }
 });
 
-//deletion endpoint for user character
-app.delete('/api/delete/:username', async (req, res) => {
+app.delete('/delete/:username', async (req, res) => {
   const { username } = req.params;
   try {
     const result = await User.findOneAndDelete({ username });

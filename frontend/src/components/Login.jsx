@@ -1,55 +1,54 @@
+// Login.jsx
 import React, { useState } from 'react';
 import useStore from '../store';
-import { Link } from 'react-router-dom';
-// import './Login.css';
-// import { useHistory } from 'react-router-dom';
-// import { useAuth } from '../context/auth';
 
 const API_URL = "http://localhost:8081/api";
 
-function Login() {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const setUser = useStore(state => state.setUser);
   const setScreen = useStore(state => state.setScreen);
-  const setGameState = useStore(state => state.setGameState);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${API_URL}/login`, {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })
       });
-      const data = await res.json();
-      if (data.error) {
-        alert(data.error);
-      } else {
+      const data = await response.json();
+      if (response.ok) {
         setUser(username);
-        if (data.user.gameState) {
-          // Load saved game state if it exists
-          setGameState(data.user.gameState);
-          setScreen('game');
-        } else {
-          setScreen('customization');
-        }
+        setScreen('customization');
+      } else {
+        alert(data.error || "Login failed");
       }
-    } catch (err) {
-      console.error("Login error:", err);
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("An error occurred during login.");
     }
   };
 
   return (
-    <div className="screen">
+    <div>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit} className="form-container">
-        <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
-        <button type="submit">Login / Create Account</button>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Username:
+          <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
+        </label>
+        <br/>
+        <label>
+          Password:
+          <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+        </label>
+        <br/>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
-}
+};
 
 export default Login;
