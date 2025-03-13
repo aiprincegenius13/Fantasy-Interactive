@@ -7,16 +7,16 @@ const API_URL = "http://localhost:8081";
 const storyData = [
   {
     id: 0,
-    text: "You awaken in a cold, dim dungeon. All around you, a low, ominous breathing echoes. In front of you hover three portals: a glowing GREEN portal, a mysterious BLUE portal, and a flickering RED portal.",
+    text: "You awaken in a cold, dim dungeon. All around you, a low, ominous breathing echoes everywhere around you. In front of you hover three portals: a glowing GREEN portal, a mysterious BLUE portal, and a flickering RED portal.",
     choices: [
       { text: "Enter the GREEN portal", next: 1 },
-      { text: "Enter the BLUE portal", next: 20 },
-      { text: "Enter the RED portal", next: 40 }
+      { text: "Enter the BLUE portal", next: "combat" },
+      { text: "Enter the RED portal", next: "combat" }
     ]
   },
   {
     id: 1,
-    text: "You step into the GREEN portal. The environment shifts but the oppressive dungeon remains. (Green count: 1)",
+    text: "You step into the GREEN portal. The environment shifts but the oppressive dungeon remains.",
     choices: [
       { text: "Enter the GREEN portal again", next: 2 },
       { text: "Switch to the BLUE portal", next: 20 },
@@ -25,15 +25,43 @@ const storyData = [
   },
   {
     id: 2,
-    text: "The corridor repeats itself. The green glow reassures you. (Green count: 2)",
+    text: "The corridor repeats itself. The green glow reassures you.",
     choices: [
       { text: "Step into the GREEN portal", next: 3 },
       { text: "Try the BLUE portal", next: 20 },
       { text: "Try the RED portal", next: 40 }
     ]
   },
-  // … (Include all other story nodes as defined in your full story data)
   {
+    id: 3,
+    text: "The corridor continues. The green glow grows.",
+    choices: [
+      { text: "Step into the GREEN portal", next: 4 },
+      { text: "Try the BLUE portal", next: 20 },
+      { text: "Try the RED portal", next: 40 }
+    ]
+  },
+  {
+    id: 4,
+    text: "The corridor continues. The green glow grows.",
+    choices: [
+      { text: "Step into the GREEN portal", next: 5 },
+      { text: "Try the BLUE portal", next: 20 },
+      { text: "Try the RED portal", next: 40 }
+    ]
+  },
+  {
+    id: 5,
+    text: "The corridor continues. The green glow grows.",
+    choices: [
+      { text: "Step into the GREEN portal", next: 6 },
+      { text: "Try the BLUE portal", next: 20 },
+      { text: "Try the RED portal", next: 40 }
+    ]
+  },
+  {
+      
+  
     id: 50,
     text: "Final Stats and Game Over Summary. Reflect on your epic journey.",
     choices: [
