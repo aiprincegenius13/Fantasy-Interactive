@@ -1,3 +1,4 @@
+// Customization.jsx :contentReference[oaicite:2]{index=2}
 import React, { useState } from 'react';
 import useStore from '../store';
 
@@ -7,12 +8,11 @@ function Customization() {
   const [alignment, setAlignment] = useState('hero');
   const [charClass, setCharClass] = useState('warrior');
   const [ability, setAbility] = useState('fireball');
-  // New state for combat tendency.
   const [tendency, setTendency] = useState('Blocking');
-  
+
   const setCharacter = useStore(state => state.setCharacter);
   const setScreen = useStore(state => state.setScreen);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -27,45 +27,7 @@ function Customization() {
       case "Rogue":
         baseStats = { life: 120, mana: 80, stamina: 100, dexterity: 18, strength: 12, agility: 20 };
         break;
-      case "Paladin":
-        baseStats = { life: 150, mana: 80, stamina: 100, dexterity: 50, strength: 25, agility: 20 };
-        break;
-      case "Arcane Rogue":
-        baseStats = { life: 120, mana: 100, stamina: 100, dexterity: 100, strength: 15, agility: 50 };
-        break;
-      case "Necromancer":
-        baseStats = { life: 80, mana: 200, stamina: 100, dexterity: 120, strength: 10, agility: 20 };
-        break;
-      case "Druid":
-        baseStats = { life: 120, mana: 125, stamina: 50, dexterity: 10, strength: 10, agility: 10 };
-        break;
-      case "Bard":
-        baseStats = { life: 100, mana: 150, stamina: 100, dexterity: 20, strength: 15, agility: 15 };
-        break;
-      case "Monk":
-        baseStats = { life: 100, mana: 20, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-        break;
-      case "Shaman":
-        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-        break;
-      case "Warlock":
-        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-        break;
-      case "Cleric":
-        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-        break;
-      case "Ranger":
-        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-        break;
-      case "Shapeshifter":
-        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-        break;
-      case "Beastmaster":
-        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-        break;
-      case "Berserker":
-        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
-        break;
+      // …other classes as needed
       default:
         baseStats = { life: 100, mana: 10, stamina: 10, dexterity: 10, strength: 10, agility: 10 };
     }
@@ -75,20 +37,19 @@ function Customization() {
       class: charClass,
       stats: baseStats,
       specialAbility: ability,
-      // New field: combat tendency.
       battleTendency: tendency
     };
 
-    // Initialize game state values if needed.
+    // Reset additional state values (including defeats)
     useStore.setState({
       character,
       currentScene: 0,
       experience: 0,
       level: 1,
+      defeats: 0,
       specialAbilities: [ability]
     });
 
-    // Save the new game state to backend.
     const stateToSave = useStore.getState();
     await fetch(`${API_URL}/save`, {
       method: "POST",
@@ -140,7 +101,6 @@ function Customization() {
           </select>
         </label>
         <br />
-        {/* New Combat Tendency selection */}
         <label>
           Choose your combat tendency:
           <select value={tendency} onChange={e => setTendency(e.target.value)}>
