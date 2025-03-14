@@ -11,7 +11,7 @@
         - Standard naming conventions are used throughout the project.
         - Ensure that the program runs without errors (comment out things that do not work, and explain your blockers - you can still receive partial credit).
         - Level of effort displayed in creativity, presentation, and user experience.
-        ### Core JavaScript
+### Core JavaScript
         - Demonstrate proper usage of ES6 syntax and tools.
         - Use functions and classes to adhere to the DRY principle.
         - Promises and async/await, where appropriate.
@@ -31,7 +31,7 @@
         -  Use React to create the application’s front-end.
         -  Use CSS to style the application.
         - Create at least four different views or pages for the application.
-        - Create some form of navigation that is included across the application’s pages, utilizing React Router for page rendering.
+        - Create some form of navigation that is included across the application’s pages,  utilizing React Router for page rendering.
         - Use React Hooks or Redux for application state management.
         - Interface directly with the server and API that you created.
 ### Presentation
