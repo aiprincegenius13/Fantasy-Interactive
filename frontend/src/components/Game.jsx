@@ -11,8 +11,27 @@ const storyData = [
 
 const sampleEnemy = {
   name: "Dungeon Troll",
+  stats: { life: 100, mana: 0, stamina: 80, dexterity: 20, strength: 200, agility: 10 },
+  specialAbilities: ["Club Smash", "Stomp", "Crushing Blow"],
+  name: "Dungeonl Ogre",
+  stats: { life: 100, mana: 0, stamina: 80, dexterity: 40, strength: 150, agility: 35 },
+  specialAbilities: ["Club Smash", "Kick", "Intimidation"],
+  name: "Dungeon Skeleton Knight",
   stats: { life: 100, mana: 0, stamina: 80, dexterity: 40, strength: 100, agility: 10 },
-  specialAbilities: ["Club Smash", "Bite", "Roar"]
+  specialAbilities: ["Strike", "Sword Slash", "Shield Bash"],
+  name: "Dungeon Goblin",
+  stats: { life: 100, mana: 0, stamina: 80, dexterity: 40, strength: 100, agility: 50 },
+  specialAbilities: ["Club Smash", "Bite", "Roar"],
+  name: "Dungeon Hobgoblin",
+  stats: { life: 100, mana: 0, stamina: 80, dexterity: 75, strength: 100, agility: 75 },
+  specialAbilities: ["Club Smash", "Bite", "Ambush"],
+  name: "Dungeon Gragon",
+  stats: { life: 400, mana: 600, stamina: 180, dexterity: 300, strength: 500, agility: 200 },
+  specialAbilities: ["Dragon Breath", "Bite", "Roar"],
+  name: "SLime",
+  stats: { life: 100, mana: 0, stamina: 80, dexterity: 40, strength: 100, agility: 50 },
+  specialAbilities: ["Acide Blast", "Devour", "Poison"],
+
 };
 
 function Game() {
