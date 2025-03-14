@@ -1,71 +1,70 @@
 import React, { useState } from "react";
 import useStore from "../store";
+import BattleScreen from "./BattleScreen";
 
-const API_URL = "http://localhost:8081/api"; // Fixed API endpoint
+const API_URL = "http://localhost:8081/api"; // Backend API endpoint
 
 const storyData = [
   {
     id: 0,
-    text: "You awaken in a cold, dim dungeon. All around you, a low, ominous breathing echoes everywhere around you. In front of you hover three portals: a glowing GREEN portal, a mysterious BLUE portal, and a flickering RED portal.",
+    text: "You awaken in a cold, dim dungeon. In front of you hover three portals: a glowing GREEN portal, a mysterious BLUE portal, and a flickering RED portal.",
     choices: [
       { text: "Enter the GREEN portal", next: 1 },
-      { text: "Enter the BLUE portal", next: "combat"},
-      { text: "Enter the RED portal", next: "combat" }
-    ]
+      { text: "Enter the BLUE portal", next: "combat" },
+      { text: "Enter the RED portal", next: "combat" },
+    ],
   },
   {
     id: 1,
-text: "Walking down a decline in the dungeon, footsteps approach you.",
-choices: [
-  { text: "Follow the footsteps", next: 2 },
-  { text: "hide until the footsteps pass the footsteps", next: 5 },
-  { text: "fight the figure", next: "combat" }],
-},
-  {
-    id: 2,
-    text: "You find yourself in a dark, gloomy cavern. A tall, ominous figure stands before you, its shadow casting a shadowy light on the cavern.",
+    text: "Walking down a decline in the dungeon, footsteps approach you.",
     choices: [
-      { text: "Sneak by the figure and ascend steps", next: 3 },
-      { text: "Run away from the figure", next: 0 },
-      { text: "fight the figure", next: "combat" }
-    ]
+      { text: "Follow the footsteps", next: 2 },
+      { text: "Hide until they pass", next: 5 },
+      { text: "Fight the figure", next: "combat" },
+    ],
   },
   {
-    id: 3,
-    text: "As you ascend the steps, a dark, ominous figure appears before you. It beckons you to a fight, and you cannot refuse.",
+    id: 4,
+    text: "After a hard-won battle, you find yourself in a new corridor.",
     choices: [
-      { text: "fight the figure", next: "combat" },
-    ]},
-    {
-      id: 4,
-      text: "After a hard won battle you notice you are in a new corrior.",
-      choices: [
-        { text: "Speedily run down the corridor", next: 5 },
-        { text: "USe an item from your inventory", next: 7 },
-        { text: "Carefully walk down corridor", next: 6 }
-      ]
-
-    },
-  {
-    id: 50,
-    text: "Final Stats and Game Over Summary. Reflect on your epic journey.",
-    choices: [
-      { text: "Restart the journey", next: 0 },
-      { text: "Exit the game", next: "exit" },
-      { text: "Review your achievements", next: 50 }
-    ]
-  }
+      { text: "Run down the corridor", next: 5 },
+      { text: "Use an item from your inventory", next: 7 },
+      { text: "Walk cautiously down the corridor", next: 6 },
+    ],
+  },
 ];
 
-const StoryScreen = ({ currentScene, onChoice }) => {
-  const user = useStore(state => state.user);
-  const character = useStore(state => state.character);
-  const inventory = useStore(state => state.inventory);
-  const experience = useStore(state => state.experience);
-  const level = useStore(state => state.level);
+const StoryScreen = () => {
+  const user = useStore((state) => state.user);
+  const character = useStore((state) => state.character);
+  const inventory = useStore((state) => state.inventory);
+  const experience = useStore((state) => state.experience);
+  const level = useStore((state) => state.level);
+  const [currentScene, setCurrentScene] = useState(0);
+  const [inBattle, setInBattle] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  // Fixed Save Game Function
+  // Handle user choices
+  const handleChoice = (choice) => {
+    if (choice.next === "combat") {
+      setInBattle(true); // Switch to battle mode
+    } else {
+      setCurrentScene(choice.next);
+    }
+  };
+
+  // Handle battle results and return to story
+  const handleBattleEnd = (playerWon) => {
+    setInBattle(false);
+    if (playerWon) {
+      setCurrentScene(4); // Move to post-battle story
+    } else {
+      alert("You were defeated! Restarting the story...");
+      setCurrentScene(0);
+    }
+  };
+
+  // Save game function
   const saveGame = async () => {
     if (!user) {
       alert("Error: No user logged in. Please log in first.");
@@ -79,14 +78,14 @@ const StoryScreen = ({ currentScene, onChoice }) => {
       character,
       inventory,
       experience,
-      level
+      level,
     };
 
     try {
       const response = await fetch(`${API_URL}/save`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: user, gameState })
+        body: JSON.stringify({ username: user, gameState }),
       });
 
       if (!response.ok) {
@@ -104,7 +103,11 @@ const StoryScreen = ({ currentScene, onChoice }) => {
     }
   };
 
-  const node = storyData.find(n => n.id === currentScene);
+  if (inBattle) {
+    return <BattleScreen onBattleEnd={handleBattleEnd} />;
+  }
+
+  const node = storyData.find((n) => n.id === currentScene);
   if (!node) return <div>No story available.</div>;
 
   return (
@@ -113,13 +116,13 @@ const StoryScreen = ({ currentScene, onChoice }) => {
       <p>{node.text}</p>
       <div className="choices">
         {node.choices.map((choice, idx) => (
-          <button key={idx} onClick={() => onChoice(choice)}>
+          <button key={idx} onClick={() => handleChoice(choice)}>
             {choice.text}
           </button>
         ))}
       </div>
 
-      {/* Fixed Save Game Button */}
+      {/* Save Game Button */}
       <button onClick={saveGame} disabled={saving}>
         {saving ? "Saving..." : "Save Game"}
       </button>
