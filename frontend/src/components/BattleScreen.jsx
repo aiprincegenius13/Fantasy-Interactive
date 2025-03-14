@@ -9,7 +9,11 @@ const API_URL = "http://localhost:8081/api";
 const sampleEnemy = {
   name: "Dungeon Troll",
   stats: { life: 100, mana: 0, stamina: 80, dexterity: 40, strength: 100, agility: 10 },
-  specialAbilities: ["Club Smash", "Bite", "Roar"]
+  specialAbilities: ["damage * 2", "Hard Body", "Dismemberment"],
+  enemyAbilities: ["Weapon Strike", "Stomp", "Crush"],
+  items: ["Health Potion", "Mana Potion", "Stamina Potion"],
+  gold: 50
+  
 };
 
 const BattleScreen = ({ onBattleEnd }) => {

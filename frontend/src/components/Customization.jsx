@@ -18,31 +18,31 @@ function Customization() {
     let baseStats;
     switch(charClass) {
       case "Warrior":
-        baseStats = { life: 150, mana: 50, stamina: 120, dexterity: 10, strength: 20, agility: 10 };
+        baseStats = { life: 150, mana: 50, stamina: 120, dexterity: 25, strength: 75, agility: 50 };
         break;
       case "Mage":
-        baseStats = { life: 100, mana: 150, stamina: 80, dexterity: 12, strength: 8, agility: 14 };
+        baseStats = { life: 100, mana: 150, stamina: 80, dexterity: 25, strength: 20, agility: 20 };
         break;
       case "Rogue":
-        baseStats = { life: 120, mana: 80, stamina: 100, dexterity: 18, strength: 12, agility: 20 };
+        baseStats = { life: 120, mana: 80, stamina: 100, dexterity: 175, strength: 50, agility: 100 };
         break;
       case "Paladin":
-        baseStats = { life: 150, mana: 80, stamina: 100, dexterity: 50, strength: 25, agility: 20 };
+        baseStats = { life: 150, mana: 150, stamina: 100, dexterity: 50, strength: 75, agility: 70 };
         break;
       case "Arcane Rogue":
-        baseStats = { life: 120, mana: 100, stamina: 100, dexterity: 100, strength: 15, agility: 50 };
+        baseStats = { life: 120, mana: 100, stamina: 100, dexterity: 100, strength: 75, agility: 100 };
         break;
       case "Necromancer":
         baseStats = { life: 80, mana: 200, stamina: 100, dexterity: 120, strength: 10, agility: 20 };
         break;
       case "Wizard":
-        baseStats = { life: 100, mana: 150, stamina: 80, dexterity: 12, strength: 8, agility: 14 };
+        baseStats = { life: 100, mana: 150, stamina: 80, dexterity: 12, strength: 25, agility: 20 };
         break;
       case "Shaman":
-        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        baseStats = { life: 100, mana:300, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
         break;
       case "Warlock":
-        baseStats = { life: 100, mana: 100, stamina: 100, dexterity: 10, strength: 10, agility: 10 };
+        baseStats = { life: 100, mana: 200, stamina: 100, dexterity: 25, strength: 25, agility: 25 };
         break;
       default:
         baseStats = { life: 100, mana: 10, stamina: 10, dexterity: 10, strength: 10, agility: 10 };
