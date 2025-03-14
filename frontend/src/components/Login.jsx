@@ -1,8 +1,8 @@
+// Login.jsx
 import React, { useState } from 'react';
 import useStore from '../store';
 
-// Updated API_URL: Removed the "/api" suffix so that the endpoint matches the server routes.
-const API_URL = "http://localhost:8081";
+const API_URL = "http://localhost:8081/api";
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -18,15 +18,13 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })
       });
-      // Check if response is OK before parsing JSON.
-      if (!response.ok) {
-        // If the response is not OK, parse text for error details.
-        const errorText = await response.text();
-        throw new Error(errorText);
-      }
       const data = await response.json();
-      setUser(username);
-      setScreen('customization');
+      if (response.ok) {
+        setUser(username);
+        setScreen('customization');
+      } else {
+        alert(data.error || "Login failed");
+      }
     } catch (error) {
       console.error("Login error:", error);
       alert("An error occurred during login.");

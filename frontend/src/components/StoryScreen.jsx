@@ -1,8 +1,7 @@
 import React from "react";
 import useStore from "../store";
 
-// Set the API_URL to match the backend endpoints (without the /api suffix)
-const API_URL = "http://localhost:8081";
+const API_URL = "http://localhost:8081"; // Backend URL
 
 const storyData = [
   {
@@ -24,44 +23,6 @@ const storyData = [
     ]
   },
   {
-    id: 2,
-    text: "The corridor repeats itself. The green glow reassures you.",
-    choices: [
-      { text: "Step into the GREEN portal", next: 3 },
-      { text: "Try the BLUE portal", next: 20 },
-      { text: "Try the RED portal", next: 40 }
-    ]
-  },
-  {
-    id: 3,
-    text: "The corridor continues. The green glow grows.",
-    choices: [
-      { text: "Step into the GREEN portal", next: 4 },
-      { text: "Try the BLUE portal", next: 20 },
-      { text: "Try the RED portal", next: 40 }
-    ]
-  },
-  {
-    id: 4,
-    text: "The corridor continues. The green glow grows.",
-    choices: [
-      { text: "Step into the GREEN portal", next: 5 },
-      { text: "Try the BLUE portal", next: 20 },
-      { text: "Try the RED portal", next: 40 }
-    ]
-  },
-  {
-    id: 5,
-    text: "The corridor continues. The green glow grows.",
-    choices: [
-      { text: "Step into the GREEN portal", next: 6 },
-      { text: "Try the BLUE portal", next: 20 },
-      { text: "Try the RED portal", next: 40 }
-    ]
-  },
-  {
-      
-  
     id: 50,
     text: "Final Stats and Game Over Summary. Reflect on your epic journey.",
     choices: [
@@ -73,22 +34,27 @@ const storyData = [
 ];
 
 const StoryScreen = ({ currentScene, onChoice }) => {
-  // Get the current user from the store
-  const user = useStore(state => state.user);
+  const user = useStore(state => state.user); // Retrieve user from store
+  const gameState = useStore(state => state); // Get full game state
 
-  // Save function that sends the entire game state to the backend
   const saveGame = async () => {
+    if (!user) {
+      alert("Error: No user logged in.");
+      return;
+    }
+
     try {
-      const gameState = useStore.getState(); // Retrieve the entire game state
       const response = await fetch(`${API_URL}/save`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: user, gameState })
       });
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText);
       }
+
       const data = await response.json();
       alert(data.message || "Game saved successfully!");
     } catch (error) {
@@ -111,7 +77,6 @@ const StoryScreen = ({ currentScene, onChoice }) => {
           </button>
         ))}
       </div>
-      {/* Save button to persist game state */}
       <button onClick={saveGame}>Save Game</button>
     </div>
   );
