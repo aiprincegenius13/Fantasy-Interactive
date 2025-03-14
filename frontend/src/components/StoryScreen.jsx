@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import useStore from "../store";
 
-const API_URL = "http://localhost:8081"; // Backend URL
+const API_URL = "http://localhost:8081"; // Ensure API is correctly set
 
 const storyData = [
   {
@@ -23,6 +23,52 @@ const storyData = [
     ]
   },
   {
+    id: 2,
+    text: "You step into the GREEN portal. The environment shifts but the oppressive dungeon remains.",
+    choices: [
+      { text: "Enter the GREEN portal again", next: "combat" },
+      { text: "Switch to the BLUE portal", next: 3},
+      { text: "Switch to the RED portal", next: "combat" }
+    ]
+  },
+  {
+    id: 3,
+    text: "You step into the GREEN portal. The environment shifts but the oppressive dungeon remains.",
+    choices: [
+      { text: "Enter the GREEN portal again", next: "combat" },
+      { text: "Switch to the BLUE portal", next: "combat" },
+      { text: "Switch to the RED portal", next: 4}
+    ]
+  },
+  {
+    id: 4,
+    text: "You step into the GREEN portal. The environment shifts but the oppressive dungeon remains.",
+    choices: [
+      { text: "Enter the GREEN portal again", next: 6 },
+      { text: "Switch to the BLUE portal", next: "combat" },
+      { text: "Switch to the RED portal", next: 5 }
+    ]
+  },
+  {
+  id: 5,
+  text: "You step into the GREEN portal. The environment shifts but the oppressive dungeon remains.",
+  choices: [
+    { text: "Enter the GREEN portal again", next: 6 },
+    { text: "Switch to the BLUE portal", next: "combat" },
+    { text: "Switch to the RED portal", next: 5 }
+  ]
+},
+  {
+    id: 6,
+    text: "You step into the GREEN portal. The environment shifts but the oppressive dungeon remains.",
+    choices: [
+      { text: "Enter the GREEN portal again", next: 8 },
+      { text: "Switch to the BLUE portal", next: 7 },
+      { text: "Switch to the RED portal", next: "combat" }
+    ]
+  },
+  
+  {
     id: 50,
     text: "Final Stats and Game Over Summary. Reflect on your epic journey.",
     choices: [
@@ -34,14 +80,18 @@ const storyData = [
 ];
 
 const StoryScreen = ({ currentScene, onChoice }) => {
-  const user = useStore(state => state.user); // Retrieve user from store
-  const gameState = useStore(state => state); // Get full game state
+  const user = useStore(state => state.user);
+  const gameState = useStore(state => state); // Fetch the entire game state
+  const [saving, setSaving] = useState(false); // Add saving state
 
+  // Save game function
   const saveGame = async () => {
     if (!user) {
       alert("Error: No user logged in.");
       return;
     }
+
+    setSaving(true); // Indicate saving process
 
     try {
       const response = await fetch(`${API_URL}/save`, {
@@ -60,6 +110,8 @@ const StoryScreen = ({ currentScene, onChoice }) => {
     } catch (error) {
       console.error("Error saving game:", error);
       alert("Failed to save game. Please try again.");
+    } finally {
+      setSaving(false); // Reset saving state
     }
   };
 
@@ -77,7 +129,11 @@ const StoryScreen = ({ currentScene, onChoice }) => {
           </button>
         ))}
       </div>
-      <button onClick={saveGame}>Save Game</button>
+
+      {/* Fixed Save Game Button (Line 80) */}
+      <button onClick={saveGame} disabled={saving}>
+        {saving ? "Saving..." : "Save Game"}
+      </button>
     </div>
   );
 };
