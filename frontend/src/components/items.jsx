@@ -3,7 +3,7 @@ import React from 'react';
 import useStore from '../store';
 
 
-const API_URL = "http://localhost:8081/api";
+const API_URL = import.meta.env.VITE_API_URL+"/api";
 
  export const Inventory = [
   // Consumables

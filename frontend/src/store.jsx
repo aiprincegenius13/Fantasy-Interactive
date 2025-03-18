@@ -1,7 +1,7 @@
 // store.js
 import {create} from 'zustand';
 
-const API_URL = "http://localhost:8081/api";
+const API_URL = import.meta.env.VITE_API_URL+"/api";
 
 const useStore = create((set) => ({
   screen: 'login',          // 'login' | 'customization' | 'story' | 'battle'

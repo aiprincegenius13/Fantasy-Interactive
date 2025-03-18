@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import useStore from '../store';
 
-const API_URL = "http://localhost:8081/api";
+const API_URL = import.meta.env.VITE_API_URL+"/api";
 
 function Customization() {
   const [alignment, setAlignment] = useState('hero');

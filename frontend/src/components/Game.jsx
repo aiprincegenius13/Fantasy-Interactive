@@ -10,7 +10,7 @@ import { abilities as enemyAbilities, getRandomSpecialAbility } from "./enemyAbi
 
 
 
-const API_URL = "http://localhost:8081/api";
+const API_URL = import.meta.env.VITE_API_URL+"/api";
 
 // Inside the Game component:
 

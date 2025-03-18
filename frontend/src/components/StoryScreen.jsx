@@ -3,7 +3,7 @@ import useStore from "../store";
 import BattleScreen from "./BattleScreen";
 
 
-const API_URL = "http://localhost:8081/api";
+const API_URL = import.meta.env.VITE_API_URL+"/api";
 
 const storyData = [
   { id: 0, text: "You awaken in a cold, dimly lit dungeon. The air is thick with the scent of damp stone and decay. You hear faint whispers echoing in the corridors. Before you are three distinct paths.",

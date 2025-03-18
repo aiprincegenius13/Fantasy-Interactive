@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import useStore from '../store';
 import '../assets/styles/Login.css'; // Import the CSS file for styling./Login.css';
 
-const API_URL = "http://localhost:8081/api";
+const API_URL = import.meta.env.VITE_API_URL+"/api";
 
 const Login = () => {
   const [username, setUsername] = useState('');
