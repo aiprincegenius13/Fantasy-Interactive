@@ -110,15 +110,15 @@ function Customization() {
         <label>
           Choose your special ability:
           <select value={ability} onChange={e => setAbility(e.target.value)}>
-            <option value="fireball">Fireball</option>
-            <option value="heal">Heal</option>
+            <option value="fireStorm">FireStorm</option>
+            <option value="Regeneration">Regeneration</option>
             <option value="stealth">Stealth</option>
             <option value="Brute Strength">Brute Strength</option>
             <option value="Levitation">Levitation</option>
             <option value="Telekinesis">Telekinesis</option>
             <option value="Ice Spear">Ice Spear</option>
             <option value="Ensare">Ensare</option>
-            <option value="Dark Magic">Dark Magic</option>
+            <option value="Abyssal Enslaught">Abyssal Enslaught</option>
           </select>
         </label>
         <br />

@@ -1,7 +1,7 @@
 import useStore from "../store";
 
 // Experience required formula (increases exponentially)
-const experienceRequired = (level) => Math.floor(100 * Math.pow(1.2, level - 1));
+ export const experienceRequired = (level) => Math.floor(100 * Math.pow(1.2, level - 1));
 
 export const gainExperience = (exp) => {
   useStore.setState((state) => {
@@ -30,5 +30,3 @@ export const gainExperience = (exp) => {
     return { ...state, experience, level, character };
   });
 };
-
-export default gainExperience;
