@@ -1,7 +1,11 @@
 // items.jsx
 import React from 'react';
+import useStore from '../store';
 
-export const items = [
+
+const API_URL = "http://localhost:8081/api";
+
+ export const Inventory = [
   // Consumables
   { name: "Health Potion", effect: "Restores 50 HP" },
   { name: "Greater Health Potion", effect: "Restores 100 HP" },
@@ -50,7 +54,12 @@ export const items = [
   { name: "Gauntlets of Thunder", effect: "Electrifies attacks, dealing extra lightning damage" },
   { name: "Wings of the Seraph", effect: "Temporarily allows flight in battle" },
   { name: "Eye of the Void", effect: "Reveals hidden enemies and secret doors" },
-  { name: "Dark Shard", effect: "Grants increased power but slowly drains health over time" }
+  { name: "Dark Shard", effect: "Grants increased power but slowly drains health over time" },
+  { name: "Health Potion", effect: "Restores 50 HP" },
+  { name: "Mana Potion", effect: "Restores 50 MP" },
+  { name: "Stamina Potion", effect: "Restores 50 Stamina" },
+  { name: "Sword of Valor", effect: "Increases strength by 10" },
+  { name: "Shadow Dagger", effect: "Increases critical hit chance by 15%" }
 ];
 
-
+export default Inventory;

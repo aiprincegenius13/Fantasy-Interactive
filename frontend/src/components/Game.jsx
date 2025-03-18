@@ -1,6 +1,16 @@
 // Import the new modules at the top of Game.jsx
 import { generateEnemy, calculateExpGain, getRandomSpecialAbility } from '../enemyAbilities';
-import items from '../items';
+import items from "./items";
+import { levelSystem } from "./Levels";
+import Abilities from "./Abilities";
+import items from "./items";
+import { generateEnemy, calculateExpGain, getRandomSpecialAbility } from './enemyAbilities';
+import { abilities as enemyAbilities, getRandomSpecialAbility } from "./enemyAbilities";
+
+
+
+
+const API_URL = "http://localhost:8081/api";
 
 // Inside the Game component:
 
@@ -8,8 +18,7 @@ const startCombat = () => {
   // Generate a random enemy based on the player's level
   const enemy = generateEnemy(character.level);
   
-  // For simplicity, assume the player wins the battle.
-  // (You could later expand this to a more detailed combat simulation.)
+  // Calculate the damage dealt by the player
   const playerStrength = character.stats.strength;
   const enemyStrength = enemy.stats.strength;
   
