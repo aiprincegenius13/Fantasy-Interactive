@@ -1,7 +1,7 @@
 // items.jsx
 import React from 'react';
 
-const items = [
+export const items = [
   // Consumables
   { name: "Health Potion", effect: "Restores 50 HP" },
   { name: "Greater Health Potion", effect: "Restores 100 HP" },
@@ -53,4 +53,4 @@ const items = [
   { name: "Dark Shard", effect: "Grants increased power but slowly drains health over time" }
 ];
 
-export default items;
+

@@ -46,5 +46,4 @@ export function getRandomSpecialAbility(enemy) {
     return enemy.specialAbilities[index];
 }
 
-// Corrected Default Export
 export default { abilities, getRandomSpecialAbility };

@@ -23,15 +23,61 @@ const storyData = [
       { text: "Fight the figure", next: "combat" },
     ],
   },
+
+  {
+    id: 2,
+    text: "SOon you come to a three way split in the cooridor after the footsteps pass and you successfully avoid detection.",
+    choices: [
+      { text: "Take the left pathe", next: 4 },
+      { text: "Take the middle path", next: "combat" },
+      { text: "Take the right path", next: 3 },
+    ]
+  },
+  {
+    id: 3,
+    text: "You continue on as the powerful adveenturer you are, you find a few items of epic quality, and while you examine yur new items you are approached from behind.",
+    choices: [
+      { text: "Stay perfectly still guaging the distance between you and the creature behind your", next: 5 },
+      { text: "TUrn with your weapon drawn and swing blindly", next: 4 },
+      { text: "TUrn and back away getig some distance", next: "combat" },
+    ]
+},
   {
     id: 4,
     text: "After a hard-won battle, you find yourself in a new corridor.",
     choices: [
       { text: "Run down the corridor", next: 5 },
-      { text: "Use an item from your inventory", next: 7 },
+      { text: "You find an item and place it in your inventory", next: 7 },
       { text: "Walk cautiously down the corridor", next: 6 },
     ],
   },
+  {
+    id: 5,
+    text: "You find yourself in a small room with a single door.",
+    choices: [
+      { text: "Open the door", next: 6 },
+      { text: "Try to force open the door", next: 7 },
+      { text: "Try to reason with the creature", next: "combat" },
+    ]
+},
+{
+  id: 6,
+  text: "You realize the door is locked, you use your lockpick skills to quietly oopen the door.",
+  choices: [
+    { text: "Sneak inside", next: 8 },
+    { text: "aWalk in the door carelessly", next: "combat" },
+    { text: "Crack the door and throw in a mana bomb", next: 9 },
+  ]
+},
+{
+  id: 7,
+  text: "The room is filled with creatures thee is no other choice but to fight",
+  choices: [
+    { text: "Sneak inside", next: " combat" },
+    { text: "aWalk in the door carelessly", next: "combat" },
+    { text: "Crack the door and throw in a mana bomb", next: "combat" },
+  ]
+},
 ];
 
 const StoryScreen = () => {

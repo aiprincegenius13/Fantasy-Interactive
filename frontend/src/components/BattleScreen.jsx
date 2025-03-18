@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import useStore from "../store";
 import Abilities from "./Abilities";
-import items from "./items";
+import { items}  from "./items";
 import { abilities as enemyAbilities, getRandomSpecialAbility } from "./enemyAbilities";
+import {gainExperience} from "./Levels";
+
 
 const BattleScreen = ({ onBattleEnd }) => {
   const character = useStore((state) => state.character);
   const [enemy, setEnemy] = useState({
-    name: "Goblin",
-    stats: { life: 80, strength: 15, agility: 10 },
+    
+    name: "Dungeon Creature",
+    stats: { life: 200, mana: 100, stamina: 100, dexterity: 75, strength: 100, agility: 100 },
     abilities: Object.keys(enemyAbilities),
+    items: [],
+  
+
+    
   });
   const [enemyLife, setEnemyLife] = useState(enemy.stats.life);
   const [battleLog, setBattleLog] = useState([]);
@@ -28,7 +35,7 @@ const BattleScreen = ({ onBattleEnd }) => {
     }
 
     const enemyAbility = getRandomSpecialAbility(enemy);
-    const enemyDamage = enemyAbility ? enemyAbilities[enemyAbility].damage : 20;
+    const enemyDamage = enemyAbility ? enemyAbilities[enemyAbility].damage : [];
     
     useStore.setState((state) => ({
       character: {
@@ -60,6 +67,7 @@ const BattleScreen = ({ onBattleEnd }) => {
           <p key={idx}>{log}</p>
         ))}
       </div>
+      
     </div>
   );
 };
