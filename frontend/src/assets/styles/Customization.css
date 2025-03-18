@@ -1,0 +1,21 @@
+/* Customization.css */
+.customization-screen {
+    background: radial-gradient(circle, black, blue, cyan);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.customization-screen select, .customization-screen button {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    padding: 5px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.customization-screen button:hover {
+    box-shadow: 0 0 10px red;
+}

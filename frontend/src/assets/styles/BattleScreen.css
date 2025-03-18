@@ -1,0 +1,19 @@
+/* BattleScreen.css */
+.battle-screen {
+    background: radial-gradient(circle, black, blue, cyan);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.battle-screen button:hover {
+    box-shadow: 0 0 10px red;
+}
+
+.battle-log {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid white;
+    padding: 10px;
+}
