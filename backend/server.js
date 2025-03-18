@@ -3,14 +3,14 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
-
+import "dotenv/config";
 const app = express();
-const port = 8081;
+const port = process.env.PORT || 8081;
 
 app.use(bodyParser.json());
 app.use(cors());
 
-mongoose.connect('mongodb+srv://ejblack369:1234@ejblack369.luk19.mongodb.net/Fantasy-Interactive?retryWrites=true&w=majority&appName=ejblack369', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
