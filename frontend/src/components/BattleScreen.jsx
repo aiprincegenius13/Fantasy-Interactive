@@ -6,6 +6,8 @@ import {useItem} from "./items";
 import { gainExperience } from "./Levels";
 import { Abilities as enemyAbilities, getRandomAbility } from "./enemyAbilities";
 
+
+
 const BattleScreen = ({ onBattleEnd }) => {
     const character = useStore((state) => state.character);
     const [enemy, setEnemy] = useState({
