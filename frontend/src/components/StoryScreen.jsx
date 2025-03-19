@@ -93,7 +93,7 @@ const storyData = [
   { id: 19, text: "Your shield takes the hit, saving you but getting damaged.", choices: [{ text: "Continue ahead", next: 29 }] },
   { id: 20, text: "The prisoner hands you a map before dying.", choices: [{ text: "Use the map", next: 30 }] },
   { id: 21, text: "You leave the prisoner and continue.", choices: [{ text: "Proceed", next: 31 }] },
-  { id: 22, text: "The creature gives you a small amount of food.", choices: [{ text: "Continue", next: 32 }] },
+  { id: 22, text: "The creature takes the food and then turns on its heals and runs off.", choices: [{ text: "Continue", next: 32 }] },
   { id: 23, text: "You run away, frantically turning down various corridors trying to lose the creature.",
      choices: [
       { text: "Fight the creature", next: "combat" },
@@ -116,34 +116,48 @@ const storyData = [
      choices: [
       { text: "Pause and ready your weapon", next: 40 },
       { text: "Turn around and confront the prisoner", next: 41 },
-      { text: "Ignore the sound and continue walking away", next: 42 }
+      { text: "Ignore the sound and continue walking away", next: 44 }
     ] },
-  { id: 32, text: "You continue.", choices: [{ text: "Continue", next: 41 }] },
-  { id: 33, text: "The sounds of the creature gegin to multiplyand you start to hear scratching underneath where you hide", choices: [{ text: "Continue", next: 42 }] },
+  { id: 32, text: "the creature returns with friends but you have no food", choices: [{ text: "Defend yourself or be eaten alive", next: "combat" }] },
+  { id: 33, text: "The sounds of the creature begin to multiply and you start to hear scratching underneath where you hide", choices: [{ text: "Continue", next: 42 }] },
   { id: 34, text: "You continue.", choices: [{ text: "Continue", next: 43 }] },
   { id: 35, text: "You continue.", choices: [{ text: "Continue", next: 44 }] },
   { id: 36, text: "You continue.", choices: [{ text: "Continue", next: 45 }] },
   { id: 37, text: "You continue.", choices: [{ text: "Continue", next: 46 }] },
   { id: 38, text: "You continue.", choices: [{ text: "Continue", next: 47 }] },
   { id: 39, text: "You continue.", choices: [{ text: "Continue", next: 48 }] },
-  { id: 40, text: "You continue.", choices: [{ text: "Continue", next: 49 }] },
+  { id: 40, text: "The creature charges you", choices: [{ text: "Fight the creaturee", next: "combat" }] },
   { id: 41, text: "You continue.", choices: [{ text: "Continue", next: 50 }] },
-  { id: 42, text: "You continue.", choices: [{ text: "Continue", next: 51 }] },
-  { id: 43, text: "You continue.", choices: [{ text: "Continue", next: 52 }] },
-  { id: 44, text: "You continue.", choices: [{ text: "Continue", next: 53 }] },
-  { id: 45, text: "You continue.", choices: [{ text: "Continue", next: 54 }] },
-  { id: 46, text: "You continue.", choices: [{ text: "Continue", next: 55 }] },
-  { id: 47, text: "You continue.", choices: [{ text: "Continue", next: 56 }] },
-  { id: 48, text: "You continue.", choices: [{ text: "Continue", next: 57 }] },
-  { id: 49, text: "You continue.", choices: [{ text: "Continue", next: 58 }] },
-  { id: 50, text: "You continue.",
+  { id: 42, text: "The creature begin to climb up the ledge one by one", 
+    choices: [
+      { text: "Stab first creature and knock them off the edge", next: 43 },
+      { text: "Jump down and deliver a devastating blow", next: "combat" },
+      { text: "Uaw  BOMB TO BLOW UP THE CREATURES ASCENDING THE WALL", next: "combat" },
+
+    ] },
+  { id: 43, text: "Other creatures join the frey trying toget your fresh meat", 
+    choices: [
+      { text: "You continue to knock down enemies as they get to the ledge by any means necessary", next: 44 },
+     
+    ] },
+  { id: 44, text: "YOu feel the breath of the creature on the back of your neck.", choices: [{ text: "turn and injure the creature", next: "combat" }] },
+  { id: 45, text: "A trap door opens and a creature appears", choices: [{ text: "", next: "combat" }] },
+  { id: 46, text: "Running up behind you a multitude of footsteps approach.", choices: [{ text: "Continue", next: "combat" }] },
+  { id: 47, text: "YOu turn down multiple corridors and you find that you are going in circles", choices: [{ text: "Continue", next: 48 }] },
+  { id: 48, text: "you wander for a few hours with no monster in sight, but you feel a breeze and continue towards the cool air", choices: [{ text: "Continue", next: 49  }] },
+  { id: 49, text: "You continue towards the cool air, as light begins to permeate the walls.", choices: [{ text: "", next: 50 }] },
+  { id: 50, text: "Three portals appear before you.",
      choices: [
-      { text: "Exit the dungeon", next: 51 },
-      { text: "Exit the dungeon", next: 52 },
-      { text: "Exit the dungeon", next: 53 }
+      { text: "Enter Green portal", next: 0 },
+      { text: "Enter Red portal", next: 51 },
+      { text: "Enter Blue portal", next: 51 }
      ]
 
      },
+  { id: 51, text: "You find yourself in a long corridor with enemies coming towards you",
+     choices: [{ text: "Fight for your life", next: "combat" } ] },
+  { id: 52, text: "The corridor continues and so do the enemies", choices: [{ text: "Fight for your life", next: "combat" } ] },
+
 ];
 
 

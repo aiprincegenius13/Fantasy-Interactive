@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import useStore from "../store";
 import Abilities from "./Abilities";
-import Inventory from "./items";
+// import {useItems} from "./Items";
 import { Abilities as enemyAbilities, getRandomAbility } from "./enemyAbilities";
 
 const BattleScreen = ({ onBattleEnd }) => {

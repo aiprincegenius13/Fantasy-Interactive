@@ -5,7 +5,6 @@ import Login from './components/Login';
 import Customization from './components/Customization';
 import StoryScreen from './components/StoryScreen';
 import BattleScreen from './components/BattleScreen';
-import LevelSystem from './components/Levels';
 import './assets/styles/Login.css';
 import './assets/styles/Customization.css';
 import './assets/styles/StoryScreen.css';
