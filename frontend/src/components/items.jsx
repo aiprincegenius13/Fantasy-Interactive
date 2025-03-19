@@ -27,6 +27,20 @@ export const useItem = (item, character) => {
       newStats.mana = character.stats.maxMana;
       newStats.stamina = character.stats.maxStamina;
       break;
+    case "Energy Drink":
+      newStats.agility += 10;
+      break;
+    case "Strength Tonic":
+      newStats.strength += 5;
+      break;
+    case "Mystic Brew":
+      newStats.manaRegen += 5;
+      break;  
+      case "Bow of the WIndWalker":
+      newStats.dexterity += 10;
+      break;
+      case "Doomblade":
+      newStats.strength += 100;
     default:
       console.warn("Item functionality not defined:", item.name);
   }

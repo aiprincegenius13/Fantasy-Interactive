@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import useStore from "../store";
 import Abilities from "./Abilities";
-// import {useItems} from "./Items";
+import {useItem} from "./items";
+import { gainExperience } from "./Levels";
 import { Abilities as enemyAbilities, getRandomAbility } from "./enemyAbilities";
 
 const BattleScreen = ({ onBattleEnd }) => {
@@ -11,6 +12,7 @@ const BattleScreen = ({ onBattleEnd }) => {
         name: "Dungeon Creature",
         stats: { life: 200, mana: 100, stamina: 100, dexterity: 75, strength: 100, agility: 100 },
         abilities: Object.keys(enemyAbilities),
+        level: 10,
         items: [
             { name: "Health Potion", effect: { life: 50 } },
             { name: "Mana Potion", effect: { mana: 50 } },

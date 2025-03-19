@@ -55,19 +55,6 @@ const abilities = {
     "Blinding Light": () => ({ damage: 50, stun: 10, manaCost: 5, effect: "Deals 50 damage with stun" }),
     "Light Barrier": () => ({ boost: { dexterity: 10, constitution: 20 }, duration: 15, effect: "Enhance dexterity and Constitution temporarily" })
   },
-  // Arcane Rogue Abilities
-  "Arcane Rogue": {
-    "Arcane Strike": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Arcane Shield": () => ({ boost: { dexterity: 10, constitution: 20 }, duration: 15, effect: "Enhance dexterity and Constitution temporarily" }),
-    "Arcane Dance": () => ({ boost: { dexterity: 10, constitution: 20 }, duration: 15, effect: "Enhance dexterity and Constitution temporarily" }),
-    "Arcane Step": () => ({ boost: { dexterity: 10, constitution: 20 }, duration: 15, effect: "Enhance dexterity and Constitution temporarily" }),
-    "Arcane Blade": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Arcane Fury": () => ({ damage: 75, manaCost: 10, effect: "Deals 75 damage" }),
-    "Backstab": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Acrobatics": () => ({ boost: { dexterity: 10, constitution: 20 }, duration: 15, effect: "Enhance dexterity and Constitution temporarily" }),
-    "Stealth": () => ({ boost: { dexterity: 10, constitution: 20 }, duration: 15, effect: "Enhance dexterity and Constitution temporarily" }),
-    "Arcane Slash": () => ({ damage: 50, effect: "Deals 50 damage" })
-  },
   // Necromancer Abilities
   "Necromancer": {
     "Summon Undead": () => ({ damage: 50, effect: "Deals 50 damage" }),
@@ -81,45 +68,7 @@ const abilities = {
     "Melee Attack": () => ({ damage: 50, effect: "Deals 50 damage" }),
     "Ranged Attack": () => ({ damage: 50, effect: "Deals 50 damage" })
   },
-  // Wizard Abilities
-  "Wizard": {
-    "Fireball": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Ice Bolt": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Lightning Bolt": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Magic Missile": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Fire Wall": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Earth Spear": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Lightning Storm": () => ({ damage: 100, effect: "Deals 100 damage" }),
-    "Blindness": () => ({ stun: 10, effect: "Stuns enemy for longer duration" }),
-    "Tornado": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Teleport": () => ({ damage: 50, effect: "Deals 50 damage" })
-  },
-  // Shaman Abilities
-  "Shaman": {
-    "Fireball": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Ice Bolt": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Lightning Bolt": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Magic Missile": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Fire Wall": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Earth Spear": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Lightning Storm": () => ({ damage: 100, effect: "Deals 100 damage" }),
-    "Blindness": () => ({ stun: 10, effect: "Stuns enemy for longer duration" }),
-    "Tornado": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Teleport": () => ({ damage: 50, effect: "Deals 50 damage" })
-  },
-  // Warlock Abilities
-  "Warlock": {
-    "Fireball": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Ice Bolt": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Lightning Bolt": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Magic Missile": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Fire Wall": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Earth Spear": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Lightning Storm": () => ({ damage: 100, effect: "Deals 100 damage" }),
-    "Blindness": () => ({ stun: 10, effect: "Stuns enemy for longer duration" }),
-    "Tornado": () => ({ damage: 50, effect: "Deals 50 damage" }),
-    "Teleport": () => ({ damage: 50, effect: "Deals 50 damage" })
-  }
+  
 };
 
 const Abilities = ({ onUseAbility }) => {
