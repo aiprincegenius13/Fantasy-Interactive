@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import useStore from "../store";
 import BattleScreen from "./BattleScreen";
+import { useItem } from "./items";
+import { gainExperience } from "./Levels";
+
+
 
 
 const API_URL = import.meta.env.VITE_API_URL+"/api";
@@ -120,12 +124,18 @@ const storyData = [
     ] },
   { id: 32, text: "the creature returns with friends but you have no food", choices: [{ text: "Defend yourself or be eaten alive", next: "combat" }] },
   { id: 33, text: "The sounds of the creature begin to multiply and you start to hear scratching underneath where you hide", choices: [{ text: "Continue", next: 42 }] },
-  { id: 34, text: "You continue.", choices: [{ text: "Continue", next: 43 }] },
-  { id: 35, text: "You continue.", choices: [{ text: "Continue", next: 44 }] },
-  { id: 36, text: "You continue.", choices: [{ text: "Continue", next: 45 }] },
-  { id: 37, text: "You continue.", choices: [{ text: "Continue", next: 46 }] },
-  { id: 38, text: "You continue.", choices: [{ text: "Continue", next: 47 }] },
-  { id: 39, text: "You continue.", choices: [{ text: "Continue", next: 48 }] },
+  { id: 34, text: "Enter a room with a stench coming from it, yu look around and see nothing but a corpse in the corner.", choices: [{ text: "Continue", next: 44 }] },
+  { id: 35, text: "You cuatiously move through the room trying to make itto the other side, but you see a shiny object next to the corpse.",
+     choices: [
+      { text: "Continue", next: 35},
+      { text: "Pick up the object", next: 37 },
+      { text: "Ignore the object", next: 36 },
+
+     ] },
+  { id: 36, text: "Go to the left and take two rights", choices: [{ text: "Continue", next: 57 }] },
+  { id: 37, text: "Go straight than take two rights", choices: [{ text: "Continue", next: 38 }] },
+  { id: 38, text: "turn left then go straight, then take another right", choices: [{ text: "Continue", next: 39 }] },
+  { id: 39, text: "You come to a door, that does not seem to be locked but is blocking your way", choices: [{ text: "Realization danws on you", next: 0 }] },
   { id: 40, text: "The creature charges you", choices: [{ text: "Fight the creaturee", next: "combat" }] },
   { id: 41, text: "You continue.", choices: [{ text: "Continue", next: 50 }] },
   { id: 42, text: "The creature begin to climb up the ledge one by one", 
@@ -161,9 +171,12 @@ const storyData = [
 ];
 
 
+
 const StoryScreen = () => {
   const [currentScene, setCurrentScene] = useState(0);
   const [inBattle, setInBattle] = useState(false);
+  const character = useStore(state => state.character);
+  const inventory = useStore(state => state.inventory || []);
 
   const handleChoice = (choice) => {
     if (choice.next === "combat") {
@@ -173,22 +186,37 @@ const StoryScreen = () => {
     }
   };
 
-  if (inBattle) return <BattleScreen onBattleEnd={() => setInBattle(false)} />;
+  if (inBattle) {
+    return <BattleScreen onBattleEnd={() => setInBattle(false)} />;
+  }
 
   const node = storyData.find(n => n.id === currentScene);
   if (!node) return <div>No story available.</div>;
 
   return (
     <div className="story-screen">
-      <h3>Story</h3>
+      <h3> Dungeon Crawl</h3>
       <p>{node.text}</p>
       {node.choices.map((choice, idx) => (
         <button key={idx} onClick={() => handleChoice(choice)}>
           {choice.text}
         </button>
       ))}
+      <ItemBox inventory={inventory} character={character} />
     </div>
   );
 };
+
+const ItemBox = ({ inventory, character }) => (
+  <div className="item-box">
+    <h4> Inventory</h4>
+    {inventory.map((item, idx) => (
+      <button key={idx} onClick={() => useItem(item, character)}>
+        {item.name}
+      </button>
+    ))}
+  </div>
+);
+
 
 export default StoryScreen;

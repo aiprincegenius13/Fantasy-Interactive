@@ -11,6 +11,9 @@ const useStore = create((set) => ({
   defeats: 0,               // Count of battle defeats
   experience: 0,
   level: 1,
+  inventory: [],            // Inventory array
+  experience: 0,
+
   setScreen: (screen) => set({ screen }),
   setUser: (user) => set({ user }),
   setCharacter: (character) => set({ character }),
