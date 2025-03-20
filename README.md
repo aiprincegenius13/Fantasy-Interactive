@@ -3,7 +3,7 @@
 ## Description - Interactive Fantasy game with user choices and dynamic story
 
 
-###Requirements
+### Requirements
         - -Project Structure, Standardization, and Convention
         - Project is organized into appropriate files and directories, following best practices.
         - Project contains an appropriate level of comments.
@@ -43,3 +43,26 @@
 
 
 Netlify = dungeon-interactive.netlify.app
+
+## Overview
+
+- A fanstay interactive game that uses sepearate screen for each main components
+- class selection
+- interactive story where user can make choices inthe story
+= uses HTML, JavaSxript, CSS, 
+- Created sepearate screens for the main components Login, BattleSxewwn, and AtoryScewwn,
+- Utlilizes backend for saved Data, and the useStore
+- uses AI funcitionality to create enemy attacks and counterAttacks
+- Uses game alerts for defeated enemies then pushes game back to story screen
+
+### Improvements and add Ons
+- Level and experience
+- functionality for items and inventory
+- Add speech synthesis for story data
+- Make it so after combat the user goe back to the story data but advances to the next  story node
+- Add more story details andchoices
+- functionality for story to pick up items when opening up treasure chests
+- Create a list of random enemies with there own abilities and item drops upon defeat
+
+
+

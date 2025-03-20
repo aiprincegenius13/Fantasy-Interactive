@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import useStore from "../store";
 import Abilities from "./Abilities";
-import {useItem} from "./items";
-import { gainExperience } from "./Levels";
+// import {useItem} from "./items";
+// import { gainExperience } from "./Levels";
 import { Abilities as enemyAbilities, getRandomAbility } from "./enemyAbilities";
 
 

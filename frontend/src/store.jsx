@@ -1,10 +1,12 @@
 // store.js
 import {create} from 'zustand';
+import startCombat from "../src/components/Game";
+
 
 const API_URL = import.meta.env.VITE_API_URL+"/api";
 
 const useStore = create((set) => ({
-  screen: 'login',          // 'login' | 'customization' | 'story' | 'battle'
+  screen: 'login',          // login
   user: null,               // Username string
   character: null,          // Character object
   currentScene: 0,          // Starting story node
@@ -19,7 +21,7 @@ const useStore = create((set) => ({
   setCharacter: (character) => set({ character }),
   setCurrentScene: (scene) => set({ currentScene: scene }),
   incrementDefeats: () => set(state => ({ defeats: state.defeats + 1 })),
-  addExperience: (exp) => set(state => ({ experience: state.experience + exp })),
+  gainExperience: (exp) => set(state => ({ experience: state.experience + exp })),
   levelUp: () => set(state => ({ level: state.level + 1 })),
 }));
 

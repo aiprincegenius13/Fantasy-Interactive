@@ -1,11 +1,11 @@
 // Import the new modules at the top of Game.jsx
-import { generateEnemy, calculateExpGain, getRandomSpecialAbility } from '../enemyAbilities';
-import items from "./items";
-import { levelSystem } from "./Levels";
-import Abilities from "./Abilities";
-import items from "./items";
-import { generateEnemy, calculateExpGain, getRandomSpecialAbility } from './enemyAbilities';
-import { abilities as enemyAbilities, getRandomSpecialAbility } from "./enemyAbilities";
+// import { generateEnemy, calculateExpGain, getRandomSpecialAbility } from '../enemyAbilities';
+// import items from "./items";
+// import { levelSystem } from "./Levels";
+// import Abilities from "./Abilities";
+// import { useItem } from "./items";
+// import { generateEnemy, calculateExpGain, getRandomSpecialAbility } from './enemyAbilities';
+// import { abilities as enemyAbilities, getRandomSpecialAbility } from "./enemyAbilities";
 
 
 
@@ -14,7 +14,7 @@ const API_URL = import.meta.env.VITE_API_URL+"/api";
 
 // Inside the Game component:
 
-const startCombat = () => {
+ const startCombat = () => {
   // Generate a random enemy based on the player's level
   const enemy = generateEnemy(character.level);
   
@@ -45,3 +45,5 @@ const startCombat = () => {
   const droppedItem = items[Math.floor(Math.random() * items.length)];
   alert(`You found a dropped item: ${droppedItem.name} - ${droppedItem.effect}`);
 };
+
+export default startCombat

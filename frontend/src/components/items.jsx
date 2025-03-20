@@ -3,6 +3,9 @@ import React from 'react';
 import useStore from '../store';
 
 
+const API_URL = import.meta.env.VITE_API_URL+"/api";
+
+
 export const useItem = (item, character) => {
   const newStats = { ...character.stats };
 
@@ -51,7 +54,7 @@ export const useItem = (item, character) => {
 
 
 
-const API_URL = import.meta.env.VITE_API_URL+"/api";
+
 
  export const Inventory = [
   // Consumables
