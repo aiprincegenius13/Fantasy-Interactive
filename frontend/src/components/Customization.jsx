@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL+"/api";
 
 function Customization() {
   const [alignment, setAlignment] = useState('hero');
-  const [charClass, setCharClass] = useState('Warrior');
+  const [charClass, setCharClass] = useState('Mage');
   const [ability, setAbility] = useState('fireball');
   const [tendency, setTendency] = useState('Blocking');
   const setCharacter = useStore(state => state.setCharacter);

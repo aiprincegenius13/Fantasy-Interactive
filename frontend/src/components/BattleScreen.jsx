@@ -12,7 +12,7 @@ const BattleScreen = ({ onBattleEnd }) => {
     const character = useStore((state) => state.character);
     const [enemy, setEnemy] = useState({
         name: "Dungeon Creature",
-        stats: { life: 200, mana: 100, stamina: 100, dexterity: 75, strength: 100, agility: 100 },
+        stats: { life: 100, mana: 100, stamina: 100, dexterity: 75, strength: 100, agility: 100 },
         abilities: Object.keys(enemyAbilities),
         level: 10,
         items: [
